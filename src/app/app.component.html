@@ -1,0 +1,25 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nav [hidden]="!loggedin" class="nav-extended">
+    <div class="nav-wrapper">
+        <!-- <a class="brand-logo right" (click)>X</a> -->
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a (click)="showSubMenu(1)">Benutzer</a></li>
+            <li><a (click)="showSubMenu(2)">Getränke</a></li>
+            <li><a routerLink="/login" (click)="logout()">Logout</a></li>
+        </ul>
+    </div>
+    <div class="nav-content" [hidden]="openTab !== 1">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a routerLink="/users">Verwalten</a></li>
+        </ul>
+    </div>
+    <div class="nav-content" [hidden]="openTab !== 2">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a routerLink="/drinks">Eintragen</a></li>
+            <li class="tab"><a routerLink="/drinks">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container center-align">
+    <router-outlet></router-outlet>
+</div>

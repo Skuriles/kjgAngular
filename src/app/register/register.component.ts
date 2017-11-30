@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { User } from '../users/userDto';
+import { HttpService } from '../services/http.service';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+
+  public title: string;
+  public user: User;
+  public passwordConfirm: string;
+  public showError = false;
+
+  constructor(
+    private httpService: HttpService
+  ) { }
+
+  ngOnInit() {
+    this.title = "Registrieren";
+    this.user = new User();
+    this.passwordConfirm = "";
+  }
+
+  public register() {
+    if (this.user.password.length > 0 && 
+      this.user.name.length > 0 && 
+      this.passwordConfirm === this.user.password) {
+      this.httpService.register(this.user).subscribe(() => {
+        // TODO register successful;
+      }, (err: HttpErrorResponse) => {
+        // TODO error
+      })
+    } else {
+      this.showError = true;
+    }
+  }
+
+}

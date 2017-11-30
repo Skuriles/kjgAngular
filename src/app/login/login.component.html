@@ -1,0 +1,27 @@
+<div style="text-align:center">
+    <h1>
+        {{title}}
+    </h1>
+</div>
+<div class="row">
+    <div class="col s10 offset-s1 l6 offset-l3">
+        <form>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Name" id="name" name="name" type="text" class="validate" [(ngModel)]="user.name">
+                    <label for="name">Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" name="password" class="validate" [(ngModel)]="user.password">
+                    <label for="password">Passwort</label>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <a class="col s6 waves-effect waves-light btn blue" routerLink="/register">Registrieren</a>
+            <a class="col s4 offset-s2 waves-effect waves-light btn blue" (click)="login()">Login</a>
+        </div>
+    </div>
+</div>
