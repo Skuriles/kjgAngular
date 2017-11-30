@@ -7,9 +7,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 Run `ng serve --proxy-config proxy.config.json` to start it for debug mode. Run kjgserver (Port 61001) with node app.js -> all `/api` calls will redirected to nodejs server (https://stackoverflow.com/questions/42895585/hooking-up-express-js-with-angular-cli-in-dev-environment)
 
-#Mongo Access
-Use mongo.bat in nodeProj root file.
-mongo user is kjgAdmin, pw: kjg2017
 
 ## Code scaffolding
 
