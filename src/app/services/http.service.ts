@@ -31,8 +31,8 @@ export class HttpService {
   }
 
   public updateUser(user: User): any {
-    const nodeUrl = this.api + "getUserList";    
-    return this.postAuthRequest(nodeUrl, null); 
+    const nodeUrl = this.api + "updateUser";    
+    return this.postAuthRequest(nodeUrl, user); 
   }
 
 
