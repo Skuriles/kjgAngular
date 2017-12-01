@@ -11,8 +11,12 @@ import { LoginService } from '../services/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {public title: string;
+export class LoginComponent implements OnInit {
+  
+  public title: string;
   public user: User;
+  public showError = false;
+  public errorText: string;
 
   constructor(
     private httpService: HttpService,
@@ -24,18 +28,18 @@ export class LoginComponent implements OnInit {public title: string;
     this.title = "Login";
     this.user = new User();
     var token = sessionStorage.getItem(MyContants.token);
-    if(token && token.length > 0){
+    if (token && token.length > 0) {
       this.httpService.loginWithToken().subscribe(
         () => {
           this.loginService.setLogin(true);
           this.router.navigate(["users"]);
         },
-        (err: HttpErrorResponse) => {  
-          this.loginService.setLogin(false);     
-          console.log(err);
+        (err: HttpErrorResponse) => {
+          this.loginService.setLogin(false);
+          this.showErrorMsg(err);         
         })
     }
-  } 
+  }
 
   public login() {
     this.httpService.login(this.user).subscribe(
@@ -46,8 +50,21 @@ export class LoginComponent implements OnInit {public title: string;
       },
       (err: HttpErrorResponse) => {
         this.loginService.setLogin(false);
-        console.log(err);
+        this.showErrorMsg(err);
       })
   }
-  
+
+  private showErrorMsg(err: HttpErrorResponse): void {
+    this.loginService.setLogin(false);
+    this.showError = true;
+    if (err.error && err.error.length > 0) {
+      this.errorText = err.error;
+    } else {
+      this.errorText = err.message;
+    }
+    setTimeout(()=> {
+      this.showError = false;
+    },4000)
+  }
+
 }

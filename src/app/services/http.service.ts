@@ -5,7 +5,7 @@ import { MyContants } from '../constants/my-contants';
   
 @Injectable()
 export class HttpService {  
-
+  
   constructor(private http: HttpClient) { }
 
   public api = "api/";
@@ -29,6 +29,12 @@ export class HttpService {
     const nodeUrl = this.api + "getUserList";    
     return this.postAuthRequest(nodeUrl, null); 
   }
+
+  public updateUser(user: User): any {
+    const nodeUrl = this.api + "getUserList";    
+    return this.postAuthRequest(nodeUrl, null); 
+  }
+
 
   // default http requests
   private postRequest(nodeUrl: string, body: object) {

@@ -1,3 +1,35 @@
-<div class="collection">
-    <a class="collection-item" *ngFor="let user of users">{{user.name}}</a>
+<ul class="collection left-align" [hidden]="editActive">
+    <li *ngFor="let user of users" class="collection-item">
+        <div>{{user.name}}<a (click)="editUser(user)" class="secondary-content isLink"><i class="fa fa-edit"></i></a></div>
+    </li>
+</ul>
+<div class="row" [hidden]="!editActive">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Benutzer Editieren</span>
+                <form>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="name" name="name" type="text" class="validate" [(ngModel)]="userToEdit.name">
+                            <label for="name">Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" type="password" name="password" class="validate" [(ngModel)]="userToEdit.password">
+                            <label for="password">Passwort</label>
+                        </div>
+                    </div>
+                </form>
+                <div class="row card-panel red darken-2" [hidden]="!showError">
+                    <span class="white-text">{{errorText}}</span>
+                </div>
+            </div>
+            <div class="card-action">
+                <a href="#" (click)="closeEdit()">ABBRECHEN</a>
+                <a href="#" (click)="saveUser()">SPEICHERN</a>
+            </div>
+        </div>
+    </div>
 </div>
