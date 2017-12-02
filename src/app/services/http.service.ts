@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from '../users/userDto';
 import { MyContants } from '../constants/my-contants';
+import { Drink } from '../drinks/drink';
   
 @Injectable()
-export class HttpService {  
-  
+export class HttpService {    
+
   constructor(private http: HttpClient) { }
 
   public api = "api/";
@@ -35,7 +36,20 @@ export class HttpService {
     return this.postAuthRequest(nodeUrl, user); 
   }
 
+  public getDrinks(): any {
+    const nodeUrl = this.api + "getDrinks";    
+    return this.postAuthRequest(nodeUrl, null); 
+  }
 
+  public updateDrink(drink: Drink): any {
+    const nodeUrl = this.api + "updateDrink";    
+    return this.postAuthRequest(nodeUrl, drink); 
+  }
+
+  public deleteDrink(drink: Drink): any {
+    const nodeUrl = this.api + "deleteDrink";    
+    return this.postAuthRequest(nodeUrl, drink); 
+  }
   // default http requests
   private postRequest(nodeUrl: string, body: object) {
     return this.http.post(nodeUrl, body)      

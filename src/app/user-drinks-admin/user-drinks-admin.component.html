@@ -8,20 +8,14 @@
         <div class="card indigo darken-1">
             <div class="card-content white-text">
                 <span class="card-title">Benutzer Editieren</span>
-                <form>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="editName" name="editName" type="text" class="validate" [(ngModel)]="userToEdit.name" disabled>
-                            <label for="editName" class="active">Name</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="password" type="text" name="password" class="validate" [(ngModel)]="userToEdit.password">
-                            <label for="password">Passwort</label>
-                        </div>
-                    </div>
-                </form>
+                <ul class="collection left-align">
+                    <li *ngFor="let drink of userToEdit.drinks" class="collection-item">
+                        <div>
+                            {{drink.name}}
+                            <a (click)="drinkPlus(drink)" class="secondary-content isLink"><i class="fa fa-plus"></i></a>
+                            <a (click)="drinkMinus(drink)" class="secondary-content isLink"><i class="fa fa-minus"></i></a></div>
+                    </li>
+                </ul>
                 <div class="row card-panel red darken-2" [hidden]="!showError">
                     <span class="white-text">{{errorText}}</span>
                 </div>
@@ -30,7 +24,6 @@
                 </div>
             </div>
             <div class="card-action">
-                <a class="isLink" (click)="closeEdit()" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveUser()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit()" [hidden]="!saveOk">OK</a>
             </div>

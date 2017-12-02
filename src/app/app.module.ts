@@ -12,6 +12,8 @@ import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginService } from './services/login.service';
 import { AuthguardService } from './services/authguard.service';
+import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
+import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { AuthguardService } from './services/authguard.service';
     DrinksComponent,
     LoginComponent,
     UsersComponent,
-    RegisterComponent   
+    RegisterComponent,
+    UserDrinksAdminComponent,
+    DrinksAdminComponent   
   ],
   imports: [
     BrowserModule,

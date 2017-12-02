@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../users/userDto';
 import { HttpService } from '../services/http.service';
-import { User } from './userDto';
 
-declare const Materialize;
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: 'app-user-drinks-admin',
+  templateUrl: './user-drinks-admin.component.html',
+  styleUrls: ['./user-drinks-admin.component.css']
 })
-export class UsersComponent implements OnInit {
-
+export class UserDrinksAdminComponent implements OnInit {
+ 
   public users: User[]
   public editActive = false;
   public userToEdit: User;
@@ -34,13 +33,10 @@ export class UsersComponent implements OnInit {
   public editUser(user: User) {
     if (user) {
       this.userToEdit.name = user.name;
-      this.userToEdit._id = user._id;      
+      this.userToEdit._id = user._id;   
+      this.userToEdit.drinks = user.drinks;   
     } 
-    this.editActive = true;
-    setTimeout(()=> {
-      Materialize.updateTextFields();
-    },10)
-    
+    this.editActive = true;       
   }
 
   public closeEdit() {
@@ -53,7 +49,7 @@ export class UsersComponent implements OnInit {
   }
 
   public saveUser() {
-    if (this.userToEdit && this.userToEdit.password && this.userToEdit.password.length > 0) {
+    if (this.userToEdit) {
       this.httpService.updateUser(this.userToEdit).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Benutzer gespeichert"; 
@@ -64,7 +60,8 @@ export class UsersComponent implements OnInit {
       });
     } else {
       this.showError = true;
-      this.errorText = "Eingabe Felder dürfen nicht leer sein";
+      this.errorText = "Felder: bitte versuche es erneut";
     }    
   }
+
 }

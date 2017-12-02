@@ -5,6 +5,8 @@ import { DrinksComponent } from './drinks/drinks.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthguardService } from './services/authguard.service';
+import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
+import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,16 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AuthguardService]
   },
+  {
+    path: 'userDrinkAdmin',
+    component: UserDrinksAdminComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: 'drinksAdmin',
+    component: DrinksAdminComponent,
+    canActivate: [AuthguardService]
+  },  
   {
     path: '',
     redirectTo: 'login',

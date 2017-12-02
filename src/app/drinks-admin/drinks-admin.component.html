@@ -1,0 +1,38 @@
+<ul class="collection left-align" [hidden]="editActive">
+    <li class="collection-item">
+        <div>Neuer Drink<a (click)="newDrink(drink)" class="secondary-content isLink"><i class="fa fa-plus"></i></a></div>
+    </li>
+    <li *ngFor="let drink of drinks" class="collection-item">
+        <div>{{drink.name}}<a (click)="editCurrentDrink(drink)" class="secondary-content isLink"><i class="fa fa-edit"></i></a></div>
+    </li>
+</ul>
+
+<div class="row center" [hidden]="!editActive">
+    <div class="col s12 m6 push-m3">
+        <div class="card indigo darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Neues Getränk</span>
+                <form>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="editName" name="editName" type="text" class="validate" [(ngModel)]="editDrink.name">
+                            <label for="editName" class="active">Name</label>
+                        </div>
+                    </div>
+                </form>
+                <div class="row card-panel red darken-2" [hidden]="!showError">
+                    <span class="white-text">{{errorText}}</span>
+                </div>
+                <div class="row card-panel teal darken-1" [hidden]="!showSuccess">
+                    <span class="white-text">{{successText}}</span>
+                </div>
+            </div>
+            <div class="card-action">
+                <a class="isLink" (click)="deleteDrink()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
+                <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
+                <a class="isLink" (click)="saveDrink()" [hidden]="saveOk">SPEICHERN</a>
+                <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
+            </div>
+        </div>
+    </div>
+</div>

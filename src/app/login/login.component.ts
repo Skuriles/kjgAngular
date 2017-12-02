@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   public user: User;
   public showError = false;
   public errorText: string;
-
+  
+  
   constructor(
     private httpService: HttpService,
     private router: Router,
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
           this.loginService.setLogin(false);
           this.showErrorMsg(err);         
         })
-    }
+    }    
   }
 
   public login() {
