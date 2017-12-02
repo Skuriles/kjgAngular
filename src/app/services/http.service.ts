@@ -31,10 +31,15 @@ export class HttpService {
     return this.postAuthRequest(nodeUrl, null); 
   }
 
-  public updateUser(user: User): any {
-    const nodeUrl = this.api + "updateUser";    
+  public updateUserPw(user: User): any {
+    const nodeUrl = this.api + "updateUserPw";    
     return this.postAuthRequest(nodeUrl, user); 
   }
+
+  public updateUserDrinks(user: User): any {
+    const nodeUrl = this.api + "updateUserDrinks";    
+    return this.postAuthRequest(nodeUrl, user); 
+  }  
 
   public getDrinks(): any {
     const nodeUrl = this.api + "getDrinks";    

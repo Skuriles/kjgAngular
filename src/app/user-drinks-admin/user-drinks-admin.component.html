@@ -8,12 +8,14 @@
         <div class="card indigo darken-1">
             <div class="card-content white-text">
                 <span class="card-title">Benutzer Editieren</span>
-                <ul class="collection left-align">
-                    <li *ngFor="let drink of userToEdit.drinks" class="collection-item">
+                <ul class="collection left-align black-text drinkUserList">
+                    <li *ngFor="let drink of drinks" class="collection-item">
                         <div>
                             {{drink.name}}
                             <a (click)="drinkPlus(drink)" class="secondary-content isLink"><i class="fa fa-plus"></i></a>
-                            <a (click)="drinkMinus(drink)" class="secondary-content isLink"><i class="fa fa-minus"></i></a></div>
+                            <a class="secondary-content">{{drink.count}}</a>
+                            <a (click)="drinkMinus(drink)" class="secondary-content isLink"><i class="fa fa-minus"></i></a>
+                        </div>
                     </li>
                 </ul>
                 <div class="row card-panel red darken-2" [hidden]="!showError">
@@ -24,6 +26,7 @@
                 </div>
             </div>
             <div class="card-action">
+                <a class="isLink" (click)="closeEdit()" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveUser()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit()" [hidden]="!saveOk">OK</a>
             </div>

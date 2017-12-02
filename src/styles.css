@@ -4,3 +4,7 @@
 .isLink {
     cursor: pointer;
 }
+
+.drinkUserList .secondary-content {
+    margin-right: 15px;
+}

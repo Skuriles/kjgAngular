@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
 
   public saveUser() {
     if (this.userToEdit && this.userToEdit.password && this.userToEdit.password.length > 0) {
-      this.httpService.updateUser(this.userToEdit).subscribe(() => {
+      this.httpService.updateUserPw(this.userToEdit).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Benutzer gespeichert"; 
         this.saveOk = true;       
