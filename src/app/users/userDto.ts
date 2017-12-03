@@ -1,10 +1,12 @@
 import { Drink } from "../drinks/drink";
+import { Role } from "./role";
 
 export class User {  
 
     public name: string;
     public password: string;
     public email: string;
+    public role: Role;
     public _id: string;
     public drinks: Drink[];
 
@@ -13,5 +15,6 @@ export class User {
         this.password = "";
         this.email = "";
         this._id = "";
+        this.role = new Role();
     }
 }
