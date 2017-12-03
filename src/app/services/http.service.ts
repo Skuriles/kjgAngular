@@ -5,7 +5,7 @@ import { MyContants } from '../constants/my-contants';
 import { Drink } from '../drinks/drink';
   
 @Injectable()
-export class HttpService {    
+export class HttpService {     
 
   constructor(private http: HttpClient) { }
 
@@ -44,6 +44,11 @@ export class HttpService {
   public getDrinks(): any {
     const nodeUrl = this.api + "getDrinks";    
     return this.postAuthRequest(nodeUrl, null); 
+  }
+
+  public getUserDrinks(user: User): any {
+    const nodeUrl = this.api + "getUserDrinks";    
+    return this.postAuthRequest(nodeUrl, user); 
   }
 
   public updateDrink(drink: Drink): any {

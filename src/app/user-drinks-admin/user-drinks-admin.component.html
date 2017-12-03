@@ -26,9 +26,9 @@
                 </div>
             </div>
             <div class="card-action">
-                <a class="isLink" (click)="closeEdit()" [hidden]="saveOk">ABBRECHEN</a>
+                <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveUser()" [hidden]="saveOk">SPEICHERN</a>
-                <a class="isLink" (click)="closeEdit()" [hidden]="!saveOk">OK</a>
+                <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
             </div>
         </div>
     </div>
