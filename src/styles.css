@@ -8,3 +8,11 @@
 .drinkUserList .secondary-content {
     margin-right: 15px;
 }
+
+.newDrinksButtons button {
+    width: 100%;
+}
+
+.newDrinksButtons {
+    margin-top: 25px;
+}

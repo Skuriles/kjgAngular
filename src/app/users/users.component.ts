@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   public successText: string;
   public saveOk = false;
   public roles: Role[];
+  public selectedRole: Role;
 
   constructor(private httpService: HttpService) { }
 
@@ -43,19 +44,28 @@ export class UsersComponent implements OnInit {
 
   public setRole(role: string) {
     for (let i = 0; i < this.roles.length; i++) {
-      if (role === this.roles[i].name) {
-        this.userToEdit.role = this.roles[i];
-        return;
+      if (role === this.roles[i]._id) {
+        return this.roles[i];
       }
     }
+    return null;
+  }
+
+  public changeRole(roleName: string) {
+    for (let i = 0; i < this.roles.length; i++) {
+      if (roleName === this.roles[i].name) {
+        this.selectedRole = this.roles[i];
+      }
+    }
+    return null;
   }
 
   public editUser(user: User) {
     if (user) {
       this.userToEdit.name = user.name;
       this.userToEdit._id = user._id;
-      // TODO prefill role correctly!!
-      this.userToEdit.role = user.role;      
+      this.selectedRole = this.setRole(user.role);
+
     }
     this.editActive = true;
     setTimeout(() => {
@@ -76,15 +86,18 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  public saveUser() {    
+  public saveUser() {
     if (this.userToEdit) {
+      if (this.selectedRole) {
+        this.userToEdit.role = this.selectedRole._id;
+      }
       this.httpService.updateUser(this.userToEdit).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Benutzer gespeichert";
         this.saveOk = true;
       }, (err) => {
         this.showError = true;
-        this.errorText = err.body;
+        this.errorText = err.error;
       });
     } else {
       this.showError = true;

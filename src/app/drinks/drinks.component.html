@@ -1,3 +1,11 @@
-<p>
-  drinks works!
-</p>
+<div class="newDrinksButtons col s1">
+    <div class="row" *ngFor="let drink of drinks">
+        <button class="waves-effect waves-light btn-large" (click)="drinkPlus(drink)">{{drink.name}}</button>
+    </div>
+    <div class="row card-panel red darken-2" [hidden]="!showError">
+        <span class="white-text">{{errorText}}</span>
+    </div>
+    <div class="row card-panel teal darken-1" [hidden]="!showSuccess">
+        <span class="white-text">{{successText}}</span>
+    </div>
+</div>

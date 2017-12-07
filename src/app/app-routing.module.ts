@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { AuthguardService } from './services/authguard.service';
 import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
 import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
+import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'drinksAdmin',
     component: DrinksAdminComponent,
+    canActivate: [AuthguardService]
+  },  
+  {
+    path: 'overview',
+    component: OverviewComponent,
     canActivate: [AuthguardService]
   },  
   {

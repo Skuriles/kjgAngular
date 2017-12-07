@@ -15,6 +15,8 @@ import { AuthguardService } from './services/authguard.service';
 import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
 import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
 import { MaterializeModule } from 'angular2-materialize';
+import { OverviewComponent } from './overview/overview.component';
+import { DrinkService } from './services/drink.service';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { MaterializeModule } from 'angular2-materialize';
     UsersComponent,
     RegisterComponent,
     UserDrinksAdminComponent,
-    DrinksAdminComponent   
+    DrinksAdminComponent,
+    OverviewComponent   
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,7 @@ import { MaterializeModule } from 'angular2-materialize';
     FormsModule,
     MaterializeModule
   ],
-  providers: [HttpService, LoginService, AuthguardService],
+  providers: [HttpService, LoginService, AuthguardService, DrinkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

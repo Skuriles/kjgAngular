@@ -3,6 +3,7 @@ import { User } from '../users/userDto';
 import { HttpService } from '../services/http.service';
 import { Drink } from '../drinks/drink';
 import { UserDrinks } from '../drinks/user-drinks';
+import { DrinkService } from '../services/drink.service';
 
 @Component({
   selector: 'app-user-drinks-admin',
@@ -21,7 +22,10 @@ export class UserDrinksAdminComponent implements OnInit {
   public successText: string;
   public saveOk = false;
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private drinkService: DrinkService
+  ) { }
 
   public ngOnInit() {
     this.users = [];
@@ -40,14 +44,13 @@ export class UserDrinksAdminComponent implements OnInit {
     });
   }
 
-
-
   public editUser(user: User) {
     if (user) {
       this.userToEdit.name = user.name;
       this.userToEdit._id = user._id;
       this.userToEdit.drinks = user.drinks;      
-      this.getUserDrinks();
+      this.drinkService.getUserDrinks(this.drinks, this.userToEdit, null);
+      this.editActive = true;   
     }    
   }
 
@@ -72,7 +75,7 @@ export class UserDrinksAdminComponent implements OnInit {
         this.saveOk = true;        
       }, (err) => {
         this.showError = true;
-        this.errorText = err.body;
+        this.errorText = err.error;
       });
     } else {
       this.showError = true;
@@ -90,29 +93,5 @@ export class UserDrinksAdminComponent implements OnInit {
     } else {
       drink.count = 0;
     }
-  }
-
-  private buildUserDrinks(userDrinks: UserDrinks[]) {
-    for (let i = 0; i < this.drinks.length; i++) {
-      const drink = this.drinks[i];
-      let found = false;
-      for (let j = 0; j < userDrinks.length; j++) {       
-        if (userDrinks[j].drink === drink._id) {
-          drink.count = userDrinks[j].count;
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        drink.count = 0;
-      }
-    }    
-  }
-
-  private getUserDrinks(){
-    this.httpService.getUserDrinks(this.userToEdit).subscribe((userDrinks: UserDrinks[])=> {      
-      this.buildUserDrinks(userDrinks);
-      this.editActive = true;      
-    })
-  }
+  }  
 }

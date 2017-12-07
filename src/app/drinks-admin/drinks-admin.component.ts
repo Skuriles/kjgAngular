@@ -54,7 +54,7 @@ export class DrinksAdminComponent implements OnInit {
         this.saveOk = true;        
       }, (err) => {
         this.showError = true;
-        this.errorText = err.body;
+        this.errorText = err.error;
       });
     } else {
       this.showError = true;

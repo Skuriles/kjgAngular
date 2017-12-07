@@ -30,6 +30,7 @@ public openTab: number;
   public logout() {   
       sessionStorage.setItem(MyContants.token, null);
       this.loginService.setLogin(false);
+      this.loginService.currentUser = null;
       this.router.navigate(["/"]);
     }
 

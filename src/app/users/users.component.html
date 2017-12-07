@@ -24,7 +24,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <select materialize="material_select" (change)="setRole($event.target.value)">                               
+                            <select materialize="material_select" (change)="changeRole($event.target.value)" [(ngModel)]="selectedRole" name="selectRole">                               
                                 <option [ngValue]="role" *ngFor="let role of roles;let i = index">{{role.name}}</option>                                                                              
                             </select>
                             <label>Rolle</label>
