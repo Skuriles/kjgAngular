@@ -9,9 +9,9 @@
             <div class="card-content white-text">
                 <span class="card-title">Benutzer Editieren</span>
                 <ul class="collection left-align black-text drinkUserList">
-                    <li *ngFor="let drink of drinks" class="collection-item">
+                    <li *ngFor="let drink of userDrink.drinks" class="collection-item">
                         <div>
-                            {{drink.name}}
+                            {{drink.drinkName}}
                             <a (click)="drinkPlus(drink)" class="secondary-content isLink"><i class="fa fa-plus"></i></a>
                             <a class="secondary-content">{{drink.count}}</a>
                             <a (click)="drinkMinus(drink)" class="secondary-content isLink"><i class="fa fa-minus"></i></a>

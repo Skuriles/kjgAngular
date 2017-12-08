@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../users/userDto';
 import { HttpService } from '../services/http.service';
 import { Drink } from '../drinks/drink';
-import { UserDrinks } from '../drinks/user-drinks';
+import { UserDrinks, DrinkCounter } from '../drinks/user-drinks';
 import { DrinkService } from '../services/drink.service';
 
 @Component({
@@ -14,13 +14,14 @@ export class UserDrinksAdminComponent implements OnInit {
   
   public users: User[];
   public drinks: Drink[];  
+  public userDrink: UserDrinks;
   public editActive = false;
   public userToEdit: User;
   public showSuccess = false;
   public showError = false;
   public errorText: string;
   public successText: string;
-  public saveOk = false;
+  public saveOk = false;  
 
   constructor(
     private httpService: HttpService,
@@ -30,6 +31,7 @@ export class UserDrinksAdminComponent implements OnInit {
   public ngOnInit() {
     this.users = [];
     this.userToEdit = new User();
+    this.userDrink = new UserDrinks();
     this.getUsersAndDrinks();    
   }
 
@@ -47,11 +49,33 @@ export class UserDrinksAdminComponent implements OnInit {
   public editUser(user: User) {
     if (user) {
       this.userToEdit.name = user.name;
-      this.userToEdit._id = user._id;
-      this.userToEdit.drinks = user.drinks;      
-      this.drinkService.getUserDrinks(this.drinks, this.userToEdit, null);
-      this.editActive = true;   
+      this.userToEdit._id = user._id;        
+      this.httpService.getUserDrinks([user._id]).subscribe((userDrinks: UserDrinks[])=> {      
+        // always first one!
+        this.buildUserDrink(userDrinks[0]);       
+        this.editActive = true;   
+      });     
     }    
+  }
+
+  public buildUserDrink(userDrink: UserDrinks){
+    for (let i = 0; i < this.drinks.length; i++) {
+     for (let j = 0; j < userDrink.drinks.length; j++) {
+       let found = false:
+      if(userDrink.drinks[j].drinkId === this.drinks[i]._id){
+        found = true;
+        break;
+        }
+     }
+     if(!found){
+       const drinkCounter = new DrinkCounter();
+       drinkCounter.drinkId = this.drinks[i]._id;
+       drinkCounter.drinkName = this.drinks[i].name;
+       drinkCounter.count = 0;       
+       userDrink.drinks.push(drinkCounter);
+     }      
+    }     
+    this.userDrink = userDrink;
   }
 
   public closeEdit(reload: Boolean) {
@@ -67,9 +91,8 @@ export class UserDrinksAdminComponent implements OnInit {
   }
 
   public saveUser() {
-    if (this.userToEdit && this.drinks) {
-      this.userToEdit.drinks = this.drinks;
-      this.httpService.updateUserDrinks(this.userToEdit).subscribe(() => {
+    if (this.userDrink) {     
+      this.httpService.updateUserDrinks(this.userDrink).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Benutzer gespeichert";
         this.saveOk = true;        

@@ -25,29 +25,44 @@ export class OverviewComponent implements OnInit {
     this.getUsersAndDrinks();
   }
 
+  private buildUserDrink(userDrinks: UserDrinks[]){    
+    for (let k = 0; k < userDrinks.length; k++) {
+      const userDrink = userDrinks[k];   
+    for (let i = 0; i < this.drinks.length; i++) {
+     for (let j = 0; j < userDrink.drinks.length; j++) {
+       let found = false:
+      if(userDrink.drinks[j].drinkId === this.drinks[i]._id){
+        found = true;
+        break;
+        }
+     }
+     if(!found){
+       const drinkCounter = new DrinkCounter();
+       drinkCounter.drinkId = this.drinks[i]._id;
+       drinkCounter.drinkName = this.drinks[i].name;
+       drinkCounter.count = 0;       
+       userDrink.drinks.push(drinkCounter);
+     }      
+    }   
+    this.userDrinks.push(userDrink);
+     }     
+  }
+
   private getUsersAndDrinks() {
     this.httpService.getUsers().subscribe((users: User[]) => {
       this.users = users;
+      const userIds = [];
+      for (let i = 0; i < this.users.length; i++) {
+        userIds.push(this.users[i]._id)        
+      }
       this.httpService.getDrinks().subscribe((drinks: Drink[]) => {
         this.drinks = drinks;
-        this.buildDrinkOverview();
-      }, (err) => {
-      });
+        this.httpService.getUserDrinks(userIds).subscribe((userDrinks: UserDrinks[])=> {          
+          this.buildUserDrink(userDrinks);                 
+        }, (err) => {
+        });               
     }, (err) => {
-    });
-  }
-
-  private buildDrinkOverview() {
-    for (let i = 0; i < this.users.length; i++) {
-      this.drinkService.getUserDrinks(this.drinks, this.users[i], (drinks, user) => this.addUserDrinks(drinks, user));
-    }    
-  }
-
-  private addUserDrinks(drinks: Drink[], user: User) {
-    for (let i = 0; i < this.users.length; i++) {
-      if (user._id === this.users[i]._id) {
-        this.users[i].drinks = drinks;
-      }
-    }
-  }
+    });       
+  } 
+  
 }

@@ -4,9 +4,9 @@
         <th *ngFor="let drink of drinks">{{drink.name}}</th>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users">
-            <td>{{user.name}}</td>
-            <td *ngFor="let userDrink of user.drinks">{{userDrink.count}}</td>
+        <tr *ngFor="let userDrink of userDrinks">
+            <td>{{userDrink.userName}}</td>
+            <td *ngFor="let drink of userDrink.drinks">{{userDrink.count}}</td>
         </tr>
     </tbody>
 </table>
