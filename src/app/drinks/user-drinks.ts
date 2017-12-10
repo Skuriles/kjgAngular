@@ -2,7 +2,10 @@ export class UserDrinks {
     public userName: string;
     public userid: string;
     public drinks: DrinkCounter[];
-    public count: number;
+
+    constructor() {
+        this.drinks = [];
+    }
 }
 
 export class DrinkCounter {

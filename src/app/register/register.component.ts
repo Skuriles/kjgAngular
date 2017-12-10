@@ -14,26 +14,27 @@ export class RegisterComponent implements OnInit {
   public user: User;
   public passwordConfirm: string;
   public showError = false;
+  public showSuccess = false;
 
   constructor(
     private httpService: HttpService
   ) { }
 
   ngOnInit() {
-    this.title = "Registrieren";
+    this.title = 'Registrieren';
     this.user = new User();
-    this.passwordConfirm = "";
+    this.passwordConfirm = '';
   }
 
   public register() {
-    if (this.user.password.length > 0 && 
-      this.user.name.length > 0 && 
+    if (this.user.password.length > 0 &&
+      this.user.name.length > 0 &&
       this.passwordConfirm === this.user.password) {
       this.httpService.register(this.user).subscribe(() => {
-        // TODO register successful;
+        this.showSuccess = true;
       }, (err: HttpErrorResponse) => {
-        // TODO error
-      })
+        this.showError = true;
+      });
     } else {
       this.showError = true;
     }

@@ -6,7 +6,7 @@
     <tbody>
         <tr *ngFor="let userDrink of userDrinks">
             <td>{{userDrink.userName}}</td>
-            <td *ngFor="let drink of userDrink.drinks">{{userDrink.count}}</td>
+            <td *ngFor="let drink of userDrink.drinks">{{drink.count}}</td>
         </tr>
     </tbody>
 </table>
