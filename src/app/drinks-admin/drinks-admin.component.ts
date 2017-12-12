@@ -4,8 +4,7 @@ import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-drinks-admin',
-  templateUrl: './drinks-admin.component.html',
-  styleUrls: ['./drinks-admin.component.css']
+  templateUrl: './drinks-admin.component.html'
 })
 export class DrinksAdminComponent implements OnInit {
 
@@ -51,21 +50,21 @@ export class DrinksAdminComponent implements OnInit {
       this.httpService.deleteDrink(this.editDrink).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Drink gelöscht";
-        this.saveOk = true;        
+        this.saveOk = true;
       }, (err) => {
         this.showError = true;
         this.errorText = err.error;
       });
     } else {
       this.showError = true;
-      this.errorText = "Fehler, bitte neu versuchen";    
+      this.errorText = "Fehler, bitte neu versuchen";
     }
 
   }
 
   public closeEdit(reload) {
     this.editActive = false;
-    this.editDrink.name = "";
+    this.editDrink.name = '';
     this.saveOk = false;
     this.showError = false;
     this.showSuccess = false;
@@ -83,14 +82,14 @@ export class DrinksAdminComponent implements OnInit {
       this.httpService.updateDrink(this.editDrink).subscribe(() => {
         this.showSuccess = true;
         this.successText = "Drink gespeichert";
-        this.saveOk = true;        
+        this.saveOk = true;
       }, (err) => {
         this.showError = true;
         this.errorText = err.body;
       });
     } else {
       this.showError = true;
-      this.errorText = "Eingabe Felder dürfen nicht leer sein";
+      this.errorText = 'Eingabe Felder dürfen nicht leer sein';
     }
   }
 

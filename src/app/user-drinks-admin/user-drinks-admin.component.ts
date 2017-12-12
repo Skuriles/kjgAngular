@@ -1,15 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { User } from "../users/userDto";
-import { HttpService } from "../services/http.service";
-import { Drink } from "../drinks/drink";
-import { UserDrinks, DrinkCounter } from "../drinks/user-drinks";
-import { DrinkService } from "../services/drink.service";
-import { userInfo } from "os";
+import { Component, OnInit } from '@angular/core';
+import { User } from '../users/userDto';
+import { HttpService } from '../services/http.service';
+import { Drink } from '../drinks/drink';
+import { UserDrinks, DrinkCounter } from '../drinks/user-drinks';
+import { DrinkService } from '../services/drink.service';
 
 @Component({
-  selector: "app-user-drinks-admin",
-  templateUrl: "./user-drinks-admin.component.html",
-  styleUrls: ["./user-drinks-admin.component.css"]
+  selector: 'app-user-drinks-admin',
+  templateUrl: './user-drinks-admin.component.html'
 })
 export class UserDrinksAdminComponent implements OnInit {
   public users: User[];
@@ -92,8 +90,8 @@ export class UserDrinksAdminComponent implements OnInit {
 
   public closeEdit(reload: Boolean) {
     this.editActive = false;
-    this.userToEdit.name = "";
-    this.userToEdit.password = "";
+    this.userToEdit.name = '';
+    this.userToEdit.password = '';
     this.saveOk = false;
     this.showError = false;
     this.showSuccess = false;
@@ -107,7 +105,7 @@ export class UserDrinksAdminComponent implements OnInit {
       this.httpService.updateUserDrinks(this.userDrink).subscribe(
         () => {
           this.showSuccess = true;
-          this.successText = "Benutzer gespeichert";
+          this.successText = 'Benutzer gespeichert';
           this.saveOk = true;
         },
         err => {
@@ -117,7 +115,7 @@ export class UserDrinksAdminComponent implements OnInit {
       );
     } else {
       this.showError = true;
-      this.errorText = "Felder: bitte versuche es erneut";
+      this.errorText = 'Felder: bitte versuche es erneut';
     }
   }
 

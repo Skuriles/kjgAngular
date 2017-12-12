@@ -4,6 +4,8 @@ import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
+import { PushNotificationsModule, PushNotificationsService } from 'ng-push';
+
 import { AppComponent } from './app.component';
 import { HttpService } from './services/http.service';
 import { DrinksComponent } from './drinks/drinks.component';
@@ -17,6 +19,7 @@ import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
 import { MaterializeModule } from 'angular2-materialize';
 import { OverviewComponent } from './overview/overview.component';
 import { DrinkService } from './services/drink.service';
+import { DailyWinnerComponent } from './daily-winner/daily-winner.component';
 
 
 @NgModule({
@@ -28,16 +31,18 @@ import { DrinkService } from './services/drink.service';
     RegisterComponent,
     UserDrinksAdminComponent,
     DrinksAdminComponent,
-    OverviewComponent   
+    OverviewComponent,
+    DailyWinnerComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    MaterializeModule
+    MaterializeModule,
+    PushNotificationsModule
   ],
-  providers: [HttpService, LoginService, AuthguardService, DrinkService],
+  providers: [HttpService, LoginService, AuthguardService, DrinkService, PushNotificationsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

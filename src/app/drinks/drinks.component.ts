@@ -1,15 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { Drink } from "./drink";
-import { HttpService } from "../services/http.service";
-import { User } from "../users/userDto";
-import { DrinkService } from "../services/drink.service";
-import { LoginService } from "../services/login.service";
-import { UserDrinks, DrinkCounter } from "./user-drinks";
+import { Component, OnInit } from '@angular/core';
+import { Drink } from './drink';
+import { HttpService } from '../services/http.service';
+import { User } from '../users/userDto';
+import { DrinkService } from '../services/drink.service';
+import { LoginService } from '../services/login.service';
+import { UserDrinks, DrinkCounter, UpdateDrink } from './user-drinks';
 
 @Component({
-  selector: "app-drinks",
-  templateUrl: "./drinks.component.html",
-  styleUrls: ["./drinks.component.css"]
+  selector: 'app-drinks',
+  templateUrl: './drinks.component.html'
 })
 export class DrinksComponent implements OnInit {
   public drinks: Drink[];
@@ -38,7 +37,11 @@ export class DrinksComponent implements OnInit {
         this.drinks = drinks;
         this.httpService.getUserDrinks([this.user._id]).subscribe(
           (userDrinks: UserDrinks[]) => {
-            this.userDrink = userDrinks[0];
+            if (userDrinks && userDrinks.length > 0) {
+              this.userDrink = userDrinks[0];
+            } else {
+              this.userDrink = new UserDrinks();
+            }
             this.checkUserDrinks();
           },
           err => {
@@ -54,22 +57,12 @@ export class DrinksComponent implements OnInit {
     );
   }
 
-  public drinkChange(drink: DrinkCounter, add: Boolean) {
-    // entweder drinks von user holen und updaten oder einfach online dazu zählen => erst abholen und anzeigen..
-    for (let i = 0; i < this.userDrink.drinks.length; i++) {
-      if (this.userDrink.drinks[i].drinkId === drink.drinkId) {
-        if (add) {
-          this.userDrink.drinks[i].count++;
-        } else {
-          this.userDrink.drinks[i].count--;
-        }
-        break;
-      }
-    }
-    this.httpService.updateUserDrinks(this.userDrink).subscribe(
+  public drinkChange(drink: DrinkCounter, add: boolean) {
+    const updateDrink = new UpdateDrink(this.userDrink.userid, drink, add);
+    this.httpService.updateUserDrink(updateDrink).subscribe(
       () => {
         this.showSuccess = true;
-        this.successText = "Drink gespeichert";
+        this.successText = 'Drink gespeichert';
         this.saveOk = true;
       },
       err => {

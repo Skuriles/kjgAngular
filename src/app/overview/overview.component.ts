@@ -1,14 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpService } from "../services/http.service";
-import { User } from "../users/userDto";
-import { Drink } from "../drinks/drink";
-import { DrinkService } from "../services/drink.service";
-import { UserDrinks, DrinkCounter } from "../drinks/user-drinks";
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../services/http.service';
+import { User } from '../users/userDto';
+import { Drink } from '../drinks/drink';
+import { DrinkService } from '../services/drink.service';
+import { UserDrinks, DrinkCounter } from '../drinks/user-drinks';
 
 @Component({
-  selector: "app-overview",
-  templateUrl: "./overview.component.html",
-  styleUrls: ["./overview.component.css"]
+  selector: 'app-overview',
+  templateUrl: './overview.component.html'
 })
 export class OverviewComponent implements OnInit {
   public drinks: Drink[];

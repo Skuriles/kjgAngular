@@ -8,17 +8,16 @@ import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-  
+
   public title: string;
   public user: User;
   public showError = false;
   public errorText: string;
-  
-  
+
+
   constructor(
     private httpService: HttpService,
     private router: Router,
@@ -27,20 +26,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginService.currentUser = null;
-    this.title = "Login";
+    this.title = 'Login';
     this.user = new User();
-    var token = sessionStorage.getItem(MyContants.token);
+    let token = sessionStorage.getItem(MyContants.token);
     if (token && token.length > 0) {
       this.httpService.loginWithToken().subscribe(
         (response) => {
           this.loginService.setLogin(true);
           this.loginService.currentUser = response.user;
-          this.router.navigate(["users"]);
+          this.router.navigate(['users']);
         },
-        (err: HttpErrorResponse) => {         
-          this.showErrorMsg(err);         
+        (err: HttpErrorResponse) => {
+          this.showErrorMsg(err);
         })
-    }    
+    }
   }
 
   public login() {
@@ -49,11 +48,11 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem(MyContants.token, response.token);
         this.loginService.setLogin(true);
         this.loginService.currentUser = response.user;
-        this.router.navigate(["users"]);
+        this.router.navigate(['users']);
       },
-      (err: HttpErrorResponse) => {       
+      (err: HttpErrorResponse) => {
         this.showErrorMsg(err);
-      })
+      });
   }
 
   private showErrorMsg(err: HttpErrorResponse): void {
@@ -64,9 +63,9 @@ export class LoginComponent implements OnInit {
     } else {
       this.errorText = err.message;
     }
-    setTimeout(()=> {
+    setTimeout(() => {
       this.showError = false;
-    },4000)
+    }, 4000);
   }
 
 }
