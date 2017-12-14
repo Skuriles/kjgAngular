@@ -28,6 +28,8 @@ export class DrinksComponent implements OnInit {
 
   public ngOnInit() {
     this.user = this.loginService.currentUser;
+    this.userDrink = new UserDrinks();
+    this.userDrink.userid = this.user._id;
     this.getDrinks();
   }
 
@@ -38,9 +40,8 @@ export class DrinksComponent implements OnInit {
         this.httpService.getUserDrinks([this.user._id]).subscribe(
           (userDrinks: UserDrinks[]) => {
             if (userDrinks && userDrinks.length > 0) {
-              this.userDrink = userDrinks[0];
-            } else {
-              this.userDrink = new UserDrinks();
+              // TODO take userid from server?
+              this.userDrink.drinks = userDrinks[0].drinks;
             }
             this.checkUserDrinks();
           },

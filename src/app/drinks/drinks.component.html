@@ -7,7 +7,7 @@
             <button class="waves-effect waves-light btn-large">{{drink.drinkName}} {{drink.count}}</button>
         </div>
         <div class="col s2">
-            <button class="waves-effect waves-light btn-large" (click)="drinkminus(drinkChange, false)"><i class="fa fa-minus"></i></button>
+            <button class="waves-effect waves-light btn-large" (click)="drinkChange(drink, false)"><i class="fa fa-minus"></i></button>
         </div>
     </div>
     <div class="row card-panel red darken-2" [hidden]="!showError">
