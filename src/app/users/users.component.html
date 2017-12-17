@@ -39,6 +39,7 @@
                 </div>
             </div>
             <div class="card-action">
+                <a class="isLink" (click)="deleteUser()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
                 <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveUser()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>

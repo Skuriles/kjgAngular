@@ -9,7 +9,7 @@ import { UserDrinks, UpdateDrink } from '../drinks/user-drinks';
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  public api = 'api/';
+  public api = 'api/'; 
 
   public register(user: User): any {
     const nodeUrl = this.api + 'register';
@@ -29,6 +29,11 @@ export class HttpService {
   public getUsers(): any {
     const nodeUrl = this.api + 'getUserList';
     return this.postAuthRequest(nodeUrl, null);
+  }
+
+  public deleteUser(user: User): any {
+    const nodeUrl = this.api + 'deleteUser';
+    return this.postAuthRequest(nodeUrl, user);
   }
 
   public getRoles(): any {
@@ -71,9 +76,14 @@ export class HttpService {
     return this.postAuthRequest(nodeUrl, drink);
   }
 
-  getDailyWinners(): any {
-    const nodeUrl = this.api + 'getDailyWinners';
+  public getDailyLeaders(): any {
+    const nodeUrl = this.api + 'getDailyLeaders';
     return this.postAuthRequest(nodeUrl, null);
+  }
+
+  public duel(user: User): any {
+    const nodeUrl = this.api + 'duel';
+    return this.postAuthRequest(nodeUrl, user);
   }
 
   // default http requests

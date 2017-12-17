@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../users/userDto';
 import { HttpService } from '../services/http.service';
 import { Drink } from '../drinks/drink';
-import { UserDrinks, DrinkCounter } from '../drinks/user-drinks';
+import { UserDrinks, DrinkCounter, UpdateDrink } from '../drinks/user-drinks';
 import { DrinkService } from '../services/drink.service';
 
 @Component({
@@ -100,34 +100,25 @@ export class UserDrinksAdminComponent implements OnInit {
     }
   }
 
-  public saveUser() {
-    if (this.userDrink) {
-      this.httpService.updateUserDrinks(this.userDrink).subscribe(
-        () => {
-          this.showSuccess = true;
-          this.successText = 'Benutzer gespeichert';
-          this.saveOk = true;
-        },
-        err => {
-          this.showError = true;
-          this.errorText = err.error;
-        }
-      );
-    } else {
-      this.showError = true;
-      this.errorText = 'Felder: bitte versuche es erneut';
-    }
-  }
-
-  public drinkPlus(drink) {
-    drink.count++;
-  }
-
-  public drinkMinus(drink) {
-    if (drink.count > 0) {
-      drink.count--;
-    } else {
-      drink.count = 0;
-    }
+  public drinkChange(drink: DrinkCounter, add: boolean) {
+    const updateDrink = new UpdateDrink(this.userDrink.userid, drink, add);
+    this.httpService.updateUserDrink(updateDrink).subscribe(
+      () => {
+        this.showSuccess = true;
+        this.successText = 'Drink gespeichert';
+        this.saveOk = true;
+        this.editUser(this.userToEdit);
+      },
+      err => {
+        this.showError = true;
+        this.errorText = err.body;
+      },
+      () => {
+        setTimeout(() => {
+          this.showError = false;
+          this.showSuccess = false;
+        }, 2000);
+      }
+    );
   }
 }

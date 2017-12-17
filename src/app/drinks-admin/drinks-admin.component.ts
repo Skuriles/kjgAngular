@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Drink } from '../drinks/drink';
-import { HttpService } from '../services/http.service';
+import { Component, OnInit } from "@angular/core";
+import { Drink } from "../drinks/drink";
+import { HttpService } from "../services/http.service";
 
 @Component({
-  selector: 'app-drinks-admin',
-  templateUrl: './drinks-admin.component.html'
+  selector: "app-drinks-admin",
+  templateUrl: "./drinks-admin.component.html"
 })
 export class DrinksAdminComponent implements OnInit {
-
   public drinks: Drink[];
   public editDrink: Drink;
   public editActive = false;
@@ -18,18 +17,21 @@ export class DrinksAdminComponent implements OnInit {
   public saveOk = false;
   public deleteActive = false;
 
-  constructor(
-    private httpService: HttpService
-  ) { }
+  constructor(private httpService: HttpService) {}
 
   public ngOnInit() {
     this.editDrink = new Drink();
     this.drinks = [];
-    this.httpService.getDrinks().subscribe((drinks) => {
-      this.drinks = drinks;
-    }, (err) => {
-      // TODO error
-    })
+    this.httpService.getDrinks().subscribe(
+      drinks => {
+        this.drinks = drinks;
+      },
+      err => {
+        this.showError = true;
+        this.errorText =
+          'Drinks konnten nicht geladen werden, bitte neu versuchen';
+      }
+    );
   }
 
   public newDrink() {
@@ -45,21 +47,23 @@ export class DrinksAdminComponent implements OnInit {
     this.editActive = true;
   }
 
-  public deleteDrink(){
+  public deleteDrink() {
     if (this.editDrink && this.editDrink._id && this.editDrink._id.length > 0) {
-      this.httpService.deleteDrink(this.editDrink).subscribe(() => {
-        this.showSuccess = true;
-        this.successText = "Drink gelöscht";
-        this.saveOk = true;
-      }, (err) => {
-        this.showError = true;
-        this.errorText = err.error;
-      });
+      this.httpService.deleteDrink(this.editDrink).subscribe(
+        () => {
+          this.showSuccess = true;
+          this.successText = 'Drink gelöscht';
+          this.saveOk = true;
+        },
+        err => {
+          this.showError = true;
+          this.errorText = err.error;
+        }
+      );
     } else {
       this.showError = true;
-      this.errorText = "Fehler, bitte neu versuchen";
+      this.errorText = 'Fehler, bitte neu versuchen';
     }
-
   }
 
   public closeEdit(reload) {
@@ -69,28 +73,42 @@ export class DrinksAdminComponent implements OnInit {
     this.showError = false;
     this.showSuccess = false;
     this.deleteActive = false;
-    if(reload){
-    this.httpService.getDrinks().subscribe((drinks) => {
-      this.drinks = drinks;
-    }, (err) => {
-      // TODO error
-    });}
+    if (reload) {
+      this.httpService.getDrinks().subscribe(
+        drinks => {
+          this.drinks = drinks;
+        },
+        err => {
+          // TODO error
+        }
+      );
+    }
   }
-
   public saveDrink() {
-    if (this.editDrink && this.editDrink.name && this.editDrink.name.length > 0) {
-      this.httpService.updateDrink(this.editDrink).subscribe(() => {
-        this.showSuccess = true;
-        this.successText = "Drink gespeichert";
-        this.saveOk = true;
-      }, (err) => {
-        this.showError = true;
-        this.errorText = err.body;
-      });
+    if (this.editDrink && this.editDrink.name === 'Blitzkolben') {
+      this.showError = true;
+      this.errorText = 'Niemand ändert den Blitzkolben!!';
+      return;
+    }
+    if (
+      this.editDrink &&
+      this.editDrink.name &&
+      this.editDrink.name.length > 0
+    ) {
+      this.httpService.updateDrink(this.editDrink).subscribe(
+        () => {
+          this.showSuccess = true;
+          this.successText = 'Drink gespeichert';
+          this.saveOk = true;
+        },
+        err => {
+          this.showError = true;
+          this.errorText = err.body;
+        }
+      );
     } else {
       this.showError = true;
       this.errorText = 'Eingabe Felder dürfen nicht leer sein';
     }
   }
-
 }

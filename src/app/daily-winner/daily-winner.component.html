@@ -1,3 +1,33 @@
-<p>
-  daily-winner works!
-</p>
+<div class="row center">
+    <div class="col s12 l6 offset-l3">
+        <div class="card lime accent-2">
+            <div class="card-content">
+                <span class="card-title">Gesamtführender</span>
+                <p>{{winnerUserTotal.user.name}} - {{winnerUserTotal.count}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row center">
+    <div class="col s12 l6 offset-l3">
+        <div class="card green darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Daily</span>
+                <p>{{dailyWinner.user.name}} - {{dailyWinner.count}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row center">
+    <div class="col s12 l6 offset-l3">
+        <div class="card light-blue darken-4">
+            <div class="card-content white-text">
+                <span class="card-title">Blitzkolben</span>
+                <p>{{dailyWinnersBlitz.user.name}} - {{dailyWinnersBlitz.count}}</p>
+            </div>
+            <div class="card-action">
+                <a class="isLink" (click)="duel()">Duell</a>
+            </div>
+        </div>
+    </div>
+</div>

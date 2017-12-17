@@ -42,6 +42,7 @@ export class OverviewComponent implements OnInit {
           drinkCounter.count = 0;
           userDrink.drinks.push(drinkCounter);
         }
+        userDrink.drinks.sort(this.drinkService.sortByDrinkName);
       }
       this.userDrinks.push(userDrink);
     }

@@ -65,6 +65,7 @@ export class DrinksComponent implements OnInit {
         this.showSuccess = true;
         this.successText = 'Drink gespeichert';
         this.saveOk = true;
+        this.getDrinks();
       },
       err => {
         this.showError = true;

@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   public saveOk = false;
   public roles: Role[];
   public selectedRole: Role;
+  public deleteActive = false;
 
   constructor(private httpService: HttpService) { }
 
@@ -68,6 +69,7 @@ export class UsersComponent implements OnInit {
 
     }
     this.editActive = true;
+    this.deleteActive = true;
     setTimeout(() => {
       Materialize.updateTextFields();
     }, 10)
@@ -79,6 +81,7 @@ export class UsersComponent implements OnInit {
     this.userToEdit.name = "";
     this.userToEdit.password = "";
     this.saveOk = false;
+    this.deleteActive = false;
     this.showError = false;
     this.showSuccess = false;
     if (reload) {
@@ -104,4 +107,24 @@ export class UsersComponent implements OnInit {
       this.errorText = "Eingabe Felder dürfen nicht leer sein";
     }
   }
+
+  public deleteUser() {
+    if (this.userToEdit && this.userToEdit._id && this.userToEdit._id.length > 0) {
+      this.httpService.deleteUser(this.userToEdit).subscribe(
+        () => {
+          this.showSuccess = true;
+          this.successText = 'Benutzer gelöscht';
+          this.saveOk = true;
+        },
+        err => {
+          this.showError = true;
+          this.errorText = err.error;
+        }
+      );
+    } else {
+      this.showError = true;
+      this.errorText = 'Fehler, bitte neu versuchen';
+    }
+  }
+
 }

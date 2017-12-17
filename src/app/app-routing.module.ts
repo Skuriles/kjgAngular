@@ -8,6 +8,7 @@ import { AuthguardService } from './services/authguard.service';
 import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
 import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
 import { OverviewComponent } from './overview/overview.component';
+import { DailyWinnerComponent } from './daily-winner/daily-winner.component';
 
 const routes: Routes = [
   {
@@ -37,12 +38,17 @@ const routes: Routes = [
     path: 'drinksAdmin',
     component: DrinksAdminComponent,
     canActivate: [AuthguardService]
-  },  
+  },
   {
     path: 'overview',
     component: OverviewComponent,
     canActivate: [AuthguardService]
-  },  
+  },
+  {
+    path: 'daily',
+    component: DailyWinnerComponent,
+    canActivate: [AuthguardService]
+  },
   {
     path: '',
     redirectTo: 'login',
