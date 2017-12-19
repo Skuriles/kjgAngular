@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 import { PushNotificationsModule, PushNotificationsService } from 'ng-push';
 
@@ -40,7 +42,10 @@ import { DailyWinnerComponent } from './daily-winner/daily-winner.component';
     AppRoutingModule,
     FormsModule,
     MaterializeModule,
-    PushNotificationsModule
+    PushNotificationsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+        enabled: environment.production
+    })
   ],
   providers: [HttpService, LoginService, AuthguardService, DrinkService, PushNotificationsService ],
   bootstrap: [AppComponent]

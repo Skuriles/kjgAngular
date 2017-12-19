@@ -3,7 +3,9 @@ import { LoginService } from './services/login.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MyContants } from './constants/my-contants';
 import { Router } from '@angular/router';
+import { SwPush } from '@angular/service-worker';
 import { PushNotificationsService } from 'ng-push';
+import { HttpService } from './services/http.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,9 @@ export class AppComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private pushNotifications: PushNotificationsService
+    private pushNotifications: PushNotificationsService,
+    private swPush: SwPush,
+    private httpService: HttpService
   ) {
     this.loggedin = this.loginService.isLoggedIn;
   }
@@ -30,6 +34,7 @@ export class AppComponent implements OnInit {
     this.pushNotifications
       .create('Test', { body: 'something' })
       .subscribe(res => console.log(res), err => console.log(err));
+      this.subscribeToPush();
   }
 
   public logout() {
@@ -46,4 +51,33 @@ export class AppComponent implements OnInit {
     }
     this.openTab = menu;
   }
+
+  private subscribeToPush() {
+        // Requesting messaging service to subscribe current client (browser)
+        this.swPush.requestSubscription({
+          serverPublicKey: MyContants.publicSwKey
+        })
+          .then(pushSubscription => {
+            const body = {
+              action: 'subscribe',
+              subscription: pushSubscription
+            }
+            // Passing subscription object to our backend
+            this.httpService.addSubscriber(body)
+              .subscribe(
+
+              res => {
+                console.log('[App] Add subscriber request answer', res)
+              },
+              err => {
+                console.log('[App] Add subscriber request failed', err)
+              }
+
+              )
+          })
+          .catch(err => {
+            console.error(err);
+          });
+
+      }
 }

@@ -4,7 +4,7 @@ import { User } from '../users/userDto';
 import { MyContants } from '../constants/my-contants';
 import { Drink } from '../drinks/drink';
 import { UserDrinks, UpdateDrink } from '../drinks/user-drinks';
-
+ 
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {}
@@ -84,6 +84,12 @@ export class HttpService {
   public duel(user: User): any {
     const nodeUrl = this.api + 'duel';
     return this.postAuthRequest(nodeUrl, user);
+  }
+
+  // serview worker
+  public addSubscriber(body): any {
+    const nodeUrl = 'push/webpush';
+    return this.postAuthRequest(nodeUrl, body);
   }
 
   // default http requests

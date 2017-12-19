@@ -2,7 +2,7 @@
 <nav [hidden]="!loggedin" class="nav-extended indigo darken-1">
     <div class="nav-wrapper">
         <!-- <a class="brand-logo right" (click)>X</a> -->
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <ul id="nav-mobile" class="left">
             <li><a (click)="showSubMenu(1)">Admin</a></li>
             <li><a (click)="showSubMenu(2)">Getränke</a></li>
             <li><a routerLink="/login" (click)="logout()">Logout</a></li>

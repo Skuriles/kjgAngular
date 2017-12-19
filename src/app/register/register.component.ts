@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   public passwordConfirm: string;
   public showError = false;
   public showSuccess = false;
+  public errorMessage = '';
 
   constructor(
     private httpService: HttpService
@@ -33,9 +34,11 @@ export class RegisterComponent implements OnInit {
         this.showSuccess = true;
       }, (err: HttpErrorResponse) => {
         this.showError = true;
+        this.errorMessage = err.error;
       });
     } else {
       this.showError = true;
+      this.errorMessage = 'Registrierung fehlgeschlagen. Bitte prüfe alle Felder!';
     }
   }
 
