@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../users/userDto';
-import { MyContants } from '../constants/my-contants';
+import { MyConstants } from '../constants/my-constants';
 import { Drink } from '../drinks/drink';
-import { UserDrinks, UpdateDrink } from '../drinks/user-drinks';
- 
+import { UserDrinks, UpdateDrink } from '../drinks/user-drinks';  
+
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {}
@@ -92,6 +92,11 @@ export class HttpService {
     return this.postAuthRequest(nodeUrl, body);
   }
 
+  public sendPush(): any {
+    const nodeUrl = 'push/send';
+    return this.postAuthRequest(nodeUrl, null);
+  }
+
   // default http requests
   private postRequest(nodeUrl: string, body: object) {
     return this.http.post(nodeUrl, body);
@@ -101,7 +106,7 @@ export class HttpService {
     return this.http.post(nodeUrl, body, {
       headers: new HttpHeaders().set(
         'Authorization',
-        sessionStorage.getItem(MyContants.token)
+        sessionStorage.getItem(MyConstants.token)
       )
     });
   }
