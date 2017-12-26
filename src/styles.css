@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "../node_modules/materialize-css/dist/css/materialize.min.css";
 .isLink {
     cursor: pointer;
 }
@@ -15,4 +14,10 @@
 
 .newDrinksButtons {
     margin-top: 25px;
+}
+
+.input-field select.browser-default {
+    width: 100%;
+    height: auto;
+    opacity: 1;
 }

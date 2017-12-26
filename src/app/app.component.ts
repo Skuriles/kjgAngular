@@ -3,7 +3,6 @@ import { LoginService } from "./services/login.service";
 import { Subscription } from "rxjs/Subscription";
 import { MyConstants } from "./constants/my-constants";
 import { Router } from "@angular/router";
-import { PushNotificationsService } from "ng-push";
 import { HttpService } from "./services/http.service";
 
 @Component({
@@ -14,27 +13,29 @@ export class AppComponent implements OnInit {
   public loggedin: boolean;
   public loginChanged: Subscription;
   public openTab: number;
-
+  public isAdmin = false;
+  
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private pushNotifications: PushNotificationsService,    
     private httpService: HttpService
   ) {
     this.loggedin = this.loginService.isLoggedIn;
+    this.isAdmin = this.loginService.isAdmin;
   }
 
   public ngOnInit(): void {
     this.loginChanged = this.loginService.loginChanged$.subscribe(() => {
       this.loggedin = this.loginService.isLoggedIn;
+      this.isAdmin = this.loginService.isAdmin;
     });
-     this.pushNotifications.requestPermission();    
   }
 
   public logout() {
     sessionStorage.setItem(MyConstants.token, null);
     this.loginService.setLogin(false);
     this.loginService.currentUser = null;
+    this.loginService.isAdmin = false;   
     this.router.navigate(["/"]);
   }
 
@@ -44,5 +45,5 @@ export class AppComponent implements OnInit {
       return;
     }
     this.openTab = menu;
-  }  
+  }
 }

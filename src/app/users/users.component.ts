@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { User } from './userDto';
 import { Role } from './role';
+import { setTimeout } from 'timers';
+declare const M;
 
-declare const Materialize;
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -11,6 +12,7 @@ declare const Materialize;
 })
 export class UsersComponent implements OnInit {
 
+  @ViewChild('roleSelect') roleSelect: ElementRef;
   public users: User[]
   public editActive = false;
   public userToEdit: User;
@@ -22,20 +24,21 @@ export class UsersComponent implements OnInit {
   public roles: Role[];
   public selectedRole: Role;
   public deleteActive = false;
+  public instance: any;
 
   constructor(private httpService: HttpService) { }
 
   public ngOnInit() {
     this.users = [];
     this.userToEdit = new User();
-    this.getUsersAndRoles();
-  }
+    this.getUsersAndRoles();      
+   }
 
   private getUsersAndRoles() {
     this.httpService.getUsers().subscribe((users: User[]) => {
       this.users = users;
       this.httpService.getRoles().subscribe((roles: Role[]) => {
-        this.roles = roles;
+        this.roles = roles;             
       }, (err) => {
         // TODO central error handling
       });
@@ -52,9 +55,15 @@ export class UsersComponent implements OnInit {
     return null;
   }
 
-  public changeRole(roleName: string) {
+public isSelectedRole(role: Role){
+  if(this.selectedRole){
+  return this.selectedRole._id === role._id);    
+} return false;
+}
+
+  public changeRole(role: Role) {
     for (let i = 0; i < this.roles.length; i++) {
-      if (roleName === this.roles[i].name) {
+      if (role._id === this.roles[i]._id) {
         this.selectedRole = this.roles[i];
       }
     }
@@ -66,14 +75,9 @@ export class UsersComponent implements OnInit {
       this.userToEdit.name = user.name;
       this.userToEdit._id = user._id;
       this.selectedRole = this.setRole(user.role);
-
     }
     this.editActive = true;
     this.deleteActive = true;
-    setTimeout(() => {
-      Materialize.updateTextFields();
-    }, 10)
-
   }
 
   public closeEdit(reload) {

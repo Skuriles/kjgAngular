@@ -6,14 +6,16 @@
         <span class="white-text">{{successText}}</span>
     </div>
     <div class="row" *ngFor="let drink of userDrink.drinks">
-        <div class="col s2">
-            <button class="waves-effect waves-light btn-large" (click)="drinkChange(drink, true)"><i class="fa fa-plus"></i></button>
+        <div class="col s2 waves-effect waves-light btn-large" (click)="drinkChange(drink, true)">
+            <i class="fa fa-plus"></i>
+            <!-- <button></button> -->
         </div>
-        <div class="col s8">
-            <button class="waves-effect waves-light btn-large">{{drink.drinkName}} {{drink.count}}</button>
+        <div class="col s8 waves-effect waves-light btn-large">
+            {{drink.drinkName}} {{drink.count}}
+            <!-- <button </button> -->
         </div>
-        <div class="col s2">
-            <button class="waves-effect waves-light btn-large" (click)="drinkChange(drink, false)"><i class="fa fa-minus"></i></button>
+        <div class="col s2 waves-effect waves-light btn-large" (click)="drinkChange(drink, false)">
+            <i class="fa fa-minus"></i>
         </div>
     </div>
 </div>

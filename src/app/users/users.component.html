@@ -23,11 +23,13 @@
                         <span>Wenn Passwort Feld leer ist -> kein Update</span>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <select materialize="material_select" (change)="changeRole($event.target.value)" [(ngModel)]="selectedRole" name="selectRole">                               
-                                <option [ngValue]="role" *ngFor="let role of roles;let i = index">{{role.name}}</option>                                                                              
-                            </select>
-                            <label>Rolle</label>
+                        <div class="col s12 black-text">
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <h4>Rolle wählen</h4>
+                                </li>
+                                <li class="collection-item isLink" *ngFor="let role of roles;let i = index" (click)="changeRole(role)" [ngClass]="{'active': isSelectedRole(role)}">{{role.name}}</li>
+                            </ul>
                         </div>
                     </div>
                 </form>

@@ -1,22 +1,24 @@
 {
     "index": "/index.html",
+    "push": {
+        "showNotifications": true,
+        "backgroundOnly": false
+    },
     "assetGroups": [{
-        "name": "app",
-        "installMode": "prefetch",
-        "resources": {
-            "files": [
-                "/favicon.ico",
-                "/index.html"
-            ]
+            "name": "app",
+            "installMode": "prefetch",
+            "resources": {
+                "files": ["/favicon.ico", "/index.html"],
+                "versionedFiles": ["/*.bundle.css", "/*.bundle.js", "/*.chunk.js"]
+            }
+        },
+        {
+            "name": "assets",
+            "installMode": "lazy",
+            "updateMode": "prefetch",
+            "resources": {
+                "files": ["/assets/**"]
+            }
         }
-    }, {
-        "name": "assets",
-        "installMode": "lazy",
-        "updateMode": "prefetch",
-        "resources": {
-            "files": [
-                "/assets/**"
-            ]
-        }
-    }]
+    ]
 }

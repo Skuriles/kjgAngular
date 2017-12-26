@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import { User } from '../users/userDto';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
+import { User } from "../users/userDto";
 
 @Injectable()
 export class LoginService {
@@ -9,7 +9,7 @@ export class LoginService {
   public currentUser: User;
   public loginChanged = new Subject();
   public loginChanged$ = this.loginChanged.asObservable();
-
+  public isAdmin = false;
 
   constructor() {
     this.isLoggedIn = false;
@@ -22,4 +22,11 @@ export class LoginService {
     }
   }
 
+  public setAdminFlag(roleName: string) {
+    if (roleName === "Admin") {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
+  }
 }
