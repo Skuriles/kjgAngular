@@ -3,23 +3,32 @@
     <div class="nav-wrapper">
         <!-- <a class="brand-logo right" (click)>X</a> -->
         <ul id="nav-mobile" class="left">
-            <li [hidden]="!isAdmin"><a (click)="showSubMenu(1)">Admin</a></li>
-            <li><a (click)="showSubMenu(2)">Getränke</a></li>
-            <li><a routerLink="/login" (click)="logout()">Logout</a></li>
+            <li [hidden]="!isAdmin"><a (click)="showSubMenu(1)"><i class="fa fa-user-circle"></i> <span class="hide-on-small-only">Admin</span></a></li>
+            <li><a (click)="showSubMenu(2)"><i class="fa fa-beer"></i> <span class="hide-on-small-only">Getränke</span></a></li>
+            <li><a (click)="showSubMenu(3)"><i class="fa fa-home"></i> <span class="hide-on-small-only">Lager</span></a></li>
+            <li><a routerLink="/login" (click)="logout()"><i class="fa fa-sign-out"></i> <span class="hide-on-small-only">Logout</span></a></li>
         </ul>
     </div>
     <div class="nav-content" [hidden]="openTab !== 1">
         <ul class="tabs tabs-transparent">
-            <li class="tab"><a routerLink="/users"><i class="fa fa-key"></i> Ändern</a></li>
-            <li class="tab"><a routerLink="/userDrinkAdmin"><i class="fa fa-beer"></i> Benutzer</a></li>
-            <li class="tab"><a routerLink="/drinksAdmin"><i class="fa fa-glass"></i> Neu</a></li>
+            <li class="tab"><a routerLink="/users"><i class="fa fa-users"></i> <span class="hide-on-small-only">Benutzer</span></a></li>
+            <li class="tab"><a routerLink="/userDrinkAdmin"><i class="fa fa-sort"></i> <span class="hide-on-small-only">Nachtragen</span></a></li>
+            <li class="tab"><a routerLink="/drinksAdmin"><i class="fa fa-glass"></i> <span class="hide-on-small-only">Getränk</span></a></li>
         </ul>
     </div>
     <div class="nav-content" [hidden]="openTab !== 2">
         <ul class="tabs tabs-transparent">
-            <li class="tab"><a routerLink="/drinks">Eintragen</a></li>
-            <li class="tab"><a routerLink="/overview">Übersicht</a></li>
-            <li class="tab"><a routerLink="/daily">Daily</a></li>
+            <li class="tab"><a routerLink="/drinks"><i class="fa fa-plus"></i> <span class="hide-on-small-only">Eintragen</span></a></li>
+            <li class="tab"><a routerLink="/overview"><i class="fa fa-reorder"></i> <span class="hide-on-small-only">Übersicht</span></a></li>
+            <li class="tab"><a routerLink="/daily"><i class="fa fa-trophy"></i> <span class="hide-on-small-only">Daily</span></a></li>
+        </ul>
+    </div>
+    <div class="nav-content" [hidden]="openTab !== 3">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a routerLink="/jobs"><i class="fa fa-industry"></i> <span class="hide-on-small-only">Jobs</span></a></li>
+            <li class="tab"><a routerLink="/dailyPlan"><i class="fa fa-list-alt"></i> <span class="hide-on-small-only">Tagesplan</span></a></li>
+            <li class="tab"><a routerLink="/newDay"><i class="fa fa-sun-o"></i> <span class="hide-on-small-only">Tag</span></a></li>
+            <li class="tab"><a routerLink="/program"><i class="fa fa-tasks"></i> <span class="hide-on-small-only">Programm</span></a></li>
         </ul>
     </div>
 </nav>

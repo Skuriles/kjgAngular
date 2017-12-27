@@ -1,0 +1,13 @@
+<table class="responsive-table">
+    <thead>
+        <tr>
+            <th>Zeit</th>
+            <th *ngFor="let day of days">{{day}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let time of times">
+            <td>{{time}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public loginChanged: Subscription;
   public openTab: number;
   public isAdmin = false;
-  
+
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
     this.loginChanged = this.loginService.loginChanged$.subscribe(() => {
       this.loggedin = this.loginService.isLoggedIn;
       this.isAdmin = this.loginService.isAdmin;
+      if(!this.loggedin){
+        this.openTab = null;
+      }
     });
   }
 
@@ -35,7 +38,7 @@ export class AppComponent implements OnInit {
     sessionStorage.setItem(MyConstants.token, null);
     this.loginService.setLogin(false);
     this.loginService.currentUser = null;
-    this.loginService.isAdmin = false;   
+    this.loginService.isAdmin = false;
     this.router.navigate(["/"]);
   }
 

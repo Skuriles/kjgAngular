@@ -3,56 +3,80 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DrinksComponent } from './drinks/drinks.component';
 import { UsersComponent } from './users/users.component';
-import { RegisterComponent } from './register/register.component';
-import { AuthguardService } from './services/authguard.service';
-import { UserDrinksAdminComponent } from './user-drinks-admin/user-drinks-admin.component';
-import { DrinksAdminComponent } from './drinks-admin/drinks-admin.component';
-import { OverviewComponent } from './overview/overview.component';
-import { DailyWinnerComponent } from './daily-winner/daily-winner.component';
+import { RegisterComponent } from "./register/register.component";
+import { AuthguardService } from "./services/authguard.service";
+import { UserDrinksAdminComponent } from "./user-drinks-admin/user-drinks-admin.component";
+import { DrinksAdminComponent } from "./drinks-admin/drinks-admin.component";
+import { OverviewComponent } from "./overview/overview.component";
+import { DailyWinnerComponent } from "./daily-winner/daily-winner.component";
+import { DailyPlanComponent } from './daily-plan/daily-plan.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { DayComponent } from './day/day.component';
+import { ProgramComponent } from './program/program.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: "login",
     component: LoginComponent
   },
   {
-    path: 'register',
+    path: "register",
     component: RegisterComponent
   },
   {
-    path: 'drinks',
+    path: "drinks",
     component: DrinksComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: 'users',
+    path: "users",
     component: UsersComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: 'userDrinkAdmin',
+    path: "userDrinkAdmin",
     component: UserDrinksAdminComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: 'drinksAdmin',
+    path: "drinksAdmin",
     component: DrinksAdminComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: 'overview',
+    path: "overview",
     component: OverviewComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: 'daily',
+    path: "daily",
     component: DailyWinnerComponent,
     canActivate: [AuthguardService]
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path: "dailyPlan",
+    component: DailyPlanComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "newDay",
+    component: DayComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "program",
+    component: ProgramComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "jobs",
+    component: JobsComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "",
+    redirectTo: "login",
+    pathMatch: "full"
   },
 ];
 

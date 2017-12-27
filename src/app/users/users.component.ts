@@ -1,19 +1,17 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
-import { HttpService } from '../services/http.service';
-import { User } from './userDto';
-import { Role } from './role';
-import { setTimeout } from 'timers';
+import { Component, OnInit } from "@angular/core";
+import { HttpService } from "../services/http.service";
+import { User } from "./userDto";
+import { Role } from "./role";
+
 declare const M;
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: "app-users",
+  templateUrl: "./users.component.html",
+  styleUrls: ["./users.component.css"]
 })
 export class UsersComponent implements OnInit {
-
-  @ViewChild('roleSelect') roleSelect: ElementRef;
-  public users: User[]
+  public users: User[];
   public editActive = false;
   public userToEdit: User;
   public showSuccess = false;
@@ -24,26 +22,30 @@ export class UsersComponent implements OnInit {
   public roles: Role[];
   public selectedRole: Role;
   public deleteActive = false;
-  public instance: any;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   public ngOnInit() {
     this.users = [];
     this.userToEdit = new User();
-    this.getUsersAndRoles();      
-   }
+    this.getUsersAndRoles();
+  }
 
   private getUsersAndRoles() {
-    this.httpService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-      this.httpService.getRoles().subscribe((roles: Role[]) => {
-        this.roles = roles;             
-      }, (err) => {
-        // TODO central error handling
-      });
-    }, (err) => {
-    });
+    this.httpService.getUsers().subscribe(
+      (users: User[]) => {
+        this.users = users;
+        this.httpService.getRoles().subscribe(
+          (roles: Role[]) => {
+            this.roles = roles;
+          },
+          err => {
+            // TODO central error handling
+          }
+        );
+      },
+      err => {}
+    );
   }
 
   public setRole(role: string) {
@@ -55,11 +57,12 @@ export class UsersComponent implements OnInit {
     return null;
   }
 
-public isSelectedRole(role: Role){
-  if(this.selectedRole){
-  return this.selectedRole._id === role._id);    
-} return false;
-}
+  public isSelectedRole(role: Role) {
+    if (this.selectedRole) {
+      return this.selectedRole._id === role._id;
+    }
+    return false;
+  }
 
   public changeRole(role: Role) {
     for (let i = 0; i < this.roles.length; i++) {
@@ -98,26 +101,10 @@ public isSelectedRole(role: Role){
       if (this.selectedRole) {
         this.userToEdit.role = this.selectedRole._id;
       }
-      this.httpService.updateUser(this.userToEdit).subscribe(() => {
-        this.showSuccess = true;
-        this.successText = "Benutzer gespeichert";
-        this.saveOk = true;
-      }, (err) => {
-        this.showError = true;
-        this.errorText = err.error;
-      });
-    } else {
-      this.showError = true;
-      this.errorText = "Eingabe Felder dürfen nicht leer sein";
-    }
-  }
-
-  public deleteUser() {
-    if (this.userToEdit && this.userToEdit._id && this.userToEdit._id.length > 0) {
-      this.httpService.deleteUser(this.userToEdit).subscribe(
+      this.httpService.updateUser(this.userToEdit).subscribe(
         () => {
           this.showSuccess = true;
-          this.successText = 'Benutzer gelöscht';
+          this.successText = "Benutzer gespeichert";
           this.saveOk = true;
         },
         err => {
@@ -127,8 +114,30 @@ public isSelectedRole(role: Role){
       );
     } else {
       this.showError = true;
-      this.errorText = 'Fehler, bitte neu versuchen';
+      this.errorText = "Eingabe Felder dürfen nicht leer sein";
     }
   }
 
+  public deleteUser() {
+    if (
+      this.userToEdit &&
+      this.userToEdit._id &&
+      this.userToEdit._id.length > 0
+    ) {
+      this.httpService.deleteUser(this.userToEdit).subscribe(
+        () => {
+          this.showSuccess = true;
+          this.successText = "Benutzer gelöscht";
+          this.saveOk = true;
+        },
+        err => {
+          this.showError = true;
+          this.errorText = err.error;
+        }
+      );
+    } else {
+      this.showError = true;
+      this.errorText = "Fehler, bitte neu versuchen";
+    }
+  }
 }

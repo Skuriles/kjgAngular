@@ -23,7 +23,7 @@ export class LoginService {
   }
 
   public setAdminFlag(roleName: string) {
-    if (roleName === "Admin") {
+    if (roleName === "Admin" || roleName === "SuperAdmin") {
       this.isAdmin = true;
     } else {
       this.isAdmin = false;
