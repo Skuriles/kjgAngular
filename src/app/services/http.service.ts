@@ -5,13 +5,14 @@ import { MyConstants } from "../constants/my-constants";
 import { Drink } from "../drinks/drink";
 import { UserDrinks, UpdateDrink } from "../drinks/user-drinks";
 import { Day } from "../day/day";
+import { ProgramPoint } from "../day/program";
 
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {}
 
   public api = "api/";
-  public pushApi = "push/";  
+  public pushApi = "push/";    
 
   public register(user: User): any {
     const nodeUrl = this.api + "register";
@@ -104,6 +105,20 @@ export class HttpService {
     return this.postAuthRequest(nodeUrl, null);
   }
 
+  public getProgramPoints(): any {
+    const nodeUrl = this.api + "getProgramPoints";
+    return this.postAuthRequest(nodeUrl, null);
+  }
+
+  public deleteProgramPoint(point: ProgramPoint): any {
+    const nodeUrl = this.api + "deleteProgramPoint";
+    return this.postAuthRequest(nodeUrl, point);
+  }
+
+  public updateProgramPoint(point: ProgramPoint): any {
+    const nodeUrl = this.api + "updateProgramPoint";
+    return this.postAuthRequest(nodeUrl, point);
+  }
   // serview worker
   public addSubscriber(body): any {
     const nodeUrl = this.api + "webpush";

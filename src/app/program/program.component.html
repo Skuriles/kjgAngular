@@ -1,3 +1,64 @@
-<p>
-  program works!
-</p>
+<ul class="collapsible" data-collapsible="accordion" [hidden]="editActive">
+    <li>
+        <div class="collapsible-header"><i class="fa fa-plus" (click)="editPoint()"></i>Neuer Programmpunkt</div>
+        <div class="collapsible-body"><span>Klicke auf das "+" um einen neuen Programmpunkt anzulegen</span></div>
+    </li>
+    <li *ngFor="let point of programPoints; let i=index">
+        <div class="collapsible-header" (click)="clicked = i"><i class="fa fa-edit" (click)="editPoint(point)"></i>{{point.shortName}}</div>
+        <div class="collapsible-body" [ngStyle]="{'display': isClicked(i)}"><span>{{point.description}}</span></div>
+    </li>
+</ul>
+<div class="row center" [hidden]="!editActive">
+    <div class="col s12 m6 push-m3">
+        <div class="card indigo darken-1">
+            <div class="card-content">
+                <span class="card-title">Programmpunkt Editieren</span>
+                <form>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="shortName" [(ngModel)]="pointToEdit.shortName">
+                            <label>Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" class="materialize-textarea" name="desc" [(ngModel)]="pointToEdit.description"></textarea>
+                            <label for="textarea1">Beschreibung</label>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="chip">Neues Material
+                        <i class="fa fa-plus"></i>
+                    </div>
+                    <div class="chip" *ngFor="let material of pointToEdit.material">
+                        {{material}}
+                        <i class="fa fa-close"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="chip">
+                        Person
+                        <i class="fa fa-plus"></i>
+                    </div>
+                    <div class="chip" *ngFor="let person of pointToEdit.people">
+                        {{person}}
+                        <i class="fa fa-plus"></i>
+                    </div>
+                </div>
+                <div class="row card-panel red darken-2" [hidden]="!showError">
+                    <span class="white-text">{{errorText}}</span>
+                </div>
+                <div class="row card-panel teal darken-1" [hidden]="!showSuccess">
+                    <span class="white-text">{{successText}}</span>
+                </div>
+            </div>
+            <div class="card-action">
+                <a class="isLink" (click)="deletePOint()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
+                <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
+                <a class="isLink" (click)="saveDay()" [hidden]="saveOk">SPEICHERN</a>
+                <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
