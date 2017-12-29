@@ -5,7 +5,7 @@ import { MyConstants } from "../constants/my-constants";
 import { Drink } from "../drinks/drink";
 import { UserDrinks, UpdateDrink } from "../drinks/user-drinks";
 import { Day } from "../day/day";
-import { ProgramPoint } from "../day/program";
+import { ProgramPoint } from "../program/program";
 
 @Injectable()
 export class HttpService {
@@ -118,6 +118,11 @@ export class HttpService {
   public updateProgramPoint(point: ProgramPoint): any {
     const nodeUrl = this.api + "updateProgramPoint";
     return this.postAuthRequest(nodeUrl, point);
+  }
+
+  public getDailyPlanEles(): any {
+    const nodeUrl = this.api + "getDailyPlanEles";
+    return this.postAuthRequest(nodeUrl, null);
   }
   // serview worker
   public addSubscriber(body): any {

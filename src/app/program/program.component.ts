@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ProgramPoint } from "../day/program";
+import { ProgramPoint } from "./program";
 import { HttpService } from "../services/http.service";
 
 declare const M;
@@ -18,6 +18,10 @@ export class ProgramComponent implements OnInit {
   public saveOk = false;
   public deleteActive = false;
   public clicked = null;
+  public newPerson = "";
+  public newMaterial = "";
+  public newMaterialActive = false;
+  public newPersonActive = false;
 
   constructor(private httpService: HttpService) {}
 
@@ -52,17 +56,18 @@ export class ProgramComponent implements OnInit {
 
   public closeEdit(reload) {
     this.editActive = false;
-    this.pointToEdit.shortName = "";
+    this.pointToEdit = new ProgramPoint();
     this.saveOk = false;
     this.deleteActive = false;
     this.showError = false;
     this.showSuccess = false;
+    this.clicked = null;
     if (reload) {
       this.getProgramPoints();
     }
   }
 
-  public saveDay() {
+  public savePoint() {
     if (this.pointToEdit) {
       this.httpService.updateProgramPoint(this.pointToEdit).subscribe(
         () => {
@@ -81,7 +86,7 @@ export class ProgramComponent implements OnInit {
     }
   }
 
-  public deleteDay() {
+  public deletePoint() {
     if (
       this.pointToEdit &&
       this.pointToEdit._id &&
@@ -105,10 +110,40 @@ export class ProgramComponent implements OnInit {
   }
 
   public isClicked(index: number) {
-    if(this.clicked === index) {
+    if (this.clicked === index) {
       return "block";
     } else {
       return "none";
+    }
+  }
+
+  public setClicked(index: number) {
+    if (this.clicked === index) {
+      this.clicked = null;
+    } else {
+      this.clicked = index;
+    }
+  }
+
+  public saveMaterial() {
+    this.pointToEdit.material.push(this.newMaterial);
+  }
+
+  public savePerson() {
+    this.pointToEdit.people.push(this.newPerson);
+  }
+
+  public removeMaterial(mat: string) {
+    const index = this.pointToEdit.material.indexOf(mat);
+    if (index !== -1) {
+      this.pointToEdit.material.splice(index, 1);
+    }
+  }
+
+  public removePerson(person: string) {
+    const index = this.pointToEdit.people.indexOf(person);
+    if (index !== -1) {
+      this.pointToEdit.people.splice(index, 1);
     }
   }
 }

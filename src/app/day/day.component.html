@@ -1,5 +1,5 @@
 <ul class="collection left-align" [hidden]="editActive">
-    <li class="collection-item" (click)="editDay()">
+    <li class="collection-item" (click)="editDay(null)">
         <div>Neuer Tag <a class="secondary-content isLink"><i class="fa fa-plus"></i></a></div>
     </li>
     <li *ngFor="let day of days" class="collection-item" (click)="editDay(day)">
@@ -22,6 +22,24 @@
                             <label>Motto</label>
                         </div>
                     </div>
+                    <div class="card-tabs">
+                        <ul class="tabs tabs-fixed-width">
+                            <li class="tab isLink"><a (click)="showTab = 1" [ngClass]="{ 'active tabactive': showTab === 1}">Vormittag</a></li>
+                            <li class="tab isLink"><a (click)="showTab = 2" [ngClass]="{ 'active tabactive': showTab === 2}">Mittag</a></li>
+                            <li class="tab isLink"><a (click)="showTab = 3" [ngClass]="{ 'active tabactive': showTab === 3}">Abend</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <div [hidden]="showTab !== 1">
+                            <i class="fa fa-edit right isLink" (click)="editProgram(1)"></i> {{dayToEdit.morning.shortName}}
+                        </div>
+                        <div [hidden]="showTab !== 2">
+                            <i class="fa fa-edit right isLink" (click)="editProgram(2)"></i> {{dayToEdit.afternoon.shortName}}
+                        </div>
+                        <div [hidden]="showTab !== 3">
+                            <i class="fa fa-edit right isLink" (click)="editProgram(3)"></i> {{dayToEdit.evening.shortName}}
+                        </div>
+                    </div>
                 </form>
                 <div class="row card-panel red darken-2" [hidden]="!showError">
                     <span class="white-text">{{errorText}}</span>
@@ -37,5 +55,18 @@
                 <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal" #pointModal>
+    <div class="modal-content">
+        <ul class="collection">
+            <li class="collection-item" [ngClass]="{ active: isSelectedPoint(null)}" (click)="selectedPoint = null">Kein Programm</li>
+            <li class="collection-item" *ngFor="let point of programPoints" [ngClass]="{ active: isSelectedPoint(point._id)}" (click)="selectedPoint = point._id">{{point.shortName}}</li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action waves-effect waves-red btn-flat" (click)="closeModal(false)">Abbrechen</a>
+        <a class="modal-action waves-effect waves-green btn-flat" (click)="closeModal(true)">Auswählen</a>
     </div>
 </div>

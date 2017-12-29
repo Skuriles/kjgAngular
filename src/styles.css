@@ -21,3 +21,7 @@
     height: auto;
     opacity: 1;
 }
+
+.tabactive {
+    border-bottom: 1px solid #f6b2b5;
+}

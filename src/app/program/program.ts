@@ -19,7 +19,13 @@ export class ProgramPoint {
     this._id = programPoint._id;
     this.attachments = programPoint.attachments;
     this.description = programPoint.description;
-    this.material = programPoint.material;
-    this.people = programPoint.people;
+    for (let i = 0; i < programPoint.material.length; i++) {
+      const el = programPoint.material[i];
+      this.material.push(el);      
+    }
+    for (let i = 0; i < programPoint.people.length; i++) {
+      const el = programPoint.people[i];
+      this.people.push(el);      
+    }        
   }
 }

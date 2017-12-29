@@ -1,13 +1,61 @@
+<div class="row card-panel red darken-2" [hidden]="!showError">
+    <span class="white-text">{{errorText}}</span>
+</div>
+<div class="row card-panel teal darken-1" [hidden]="!showSuccess">
+    <span class="white-text">{{successText}}</span>
+</div>
 <table class="responsive-table">
     <thead>
         <tr>
             <th>Zeit</th>
-            <th *ngFor="let day of days">{{day}}</th>
+            <th *ngFor="let day of daysEx">{{day.date | date:'dd.MM.yyyy' }} - {{day.name}}</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let time of times">
-            <td>{{time}}</td>
+        <tr>
+            <td>Vormittags</td>
+            <td *ngFor="let day of daysEx" (click)="showModal(day.morning)">{{day.morning.shortName}}</td>
+        </tr>
+        <tr>
+            <td>Mittags</td>
+            <td *ngFor="let day of daysEx" (click)="showModal(day.afternoon)">{{day.afternoon.shortName}}</td>
+        </tr>
+        <tr>
+            <td>Abends</td>
+            <td *ngFor="let day of daysEx" (click)="showModal(day.evening)">{{day.evening.shortName}}</td>
         </tr>
     </tbody>
 </table>
+<div id="modal1" class="modal" #dayModal>
+    <div class="modal-content">
+        <div class="row">
+            {{selectedPoint.shortName}}
+        </div>
+        <div class="row">
+            {{selectedPoint.description}}
+        </div>
+        <div class="row">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>Material</h5>
+                </li>
+                <li class="collection-item" *ngFor="let mat of selectedPoint.material">
+                    {{mat}}
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>Personen</h5>
+                </li>
+                <li class="collection-item" *ngFor="let person of selectedPoint.people">
+                    {{person}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action waves-effect waves-green btn-flat" (click)="closeModal()">OK</a>
+    </div>
+</div>
