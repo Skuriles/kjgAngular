@@ -3,6 +3,7 @@ export class ProgramPoint {
   public description: string;
   public material: string[];
   public attachments: string[];
+  public links: string[];
   public people: string[];
   public _id: string;
 
@@ -10,6 +11,7 @@ export class ProgramPoint {
     this._id = "";
     this.shortName = "Neuer Programmpunkt";
     this.attachments = [];
+    this.links = [];
     this.material = [];
     this.people = [];
   }
@@ -21,11 +23,11 @@ export class ProgramPoint {
     this.description = programPoint.description;
     for (let i = 0; i < programPoint.material.length; i++) {
       const el = programPoint.material[i];
-      this.material.push(el);      
+      this.material.push(el);
     }
     for (let i = 0; i < programPoint.people.length; i++) {
       const el = programPoint.people[i];
-      this.people.push(el);      
-    }        
+      this.people.push(el);
+    }
   }
 }

@@ -4,6 +4,7 @@ import localeDe from "@angular/common/locales/de";
 import { HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { FormsModule } from "@angular/forms";
+import { FileUploadModule } from 'ng2-file-upload';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 
@@ -47,6 +48,7 @@ import { ProgramComponent } from "./program/program.component";
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    FileUploadModule,
     ServiceWorkerModule.register("/ngsw-worker.js", {
         enabled: environment.production
     })

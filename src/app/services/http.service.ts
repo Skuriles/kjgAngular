@@ -6,6 +6,7 @@ import { Drink } from "../drinks/drink";
 import { UserDrinks, UpdateDrink } from "../drinks/user-drinks";
 import { Day } from "../day/day";
 import { ProgramPoint } from "../program/program";
+import { Job } from "../jobs/job";
 
 @Injectable()
 export class HttpService {
@@ -17,7 +18,7 @@ export class HttpService {
   public register(user: User): any {
     const nodeUrl = this.api + "register";
     return this.postRequest(nodeUrl, user);
-  }
+  } 
 
   public login(user: User): any {
     const nodeUrl = this.api + "login";
@@ -123,7 +124,25 @@ export class HttpService {
   public getDailyPlanEles(): any {
     const nodeUrl = this.api + "getDailyPlanEles";
     return this.postAuthRequest(nodeUrl, null);
+  } 
+
+  // job stuff
+
+  public getJobs(): any {
+    const nodeUrl = this.api + "getJobs";
+    return this.postAuthRequest(nodeUrl, null);
   }
+
+  public updateJob(job: Job): any {
+    const nodeUrl = this.api + "updateJob";
+    return this.postAuthRequest(nodeUrl, job);
+  }
+
+  public deleteJob(job: Job): any {
+    const nodeUrl = this.api + "deleteJob";
+    return this.postAuthRequest(nodeUrl, job);
+  }
+  
   // serview worker
   public addSubscriber(body): any {
     const nodeUrl = this.api + "webpush";

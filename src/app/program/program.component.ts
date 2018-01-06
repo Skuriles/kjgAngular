@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { FileUploader, FileItem } from "ng2-file-upload";
 import { ProgramPoint } from "./program";
 import { HttpService } from "../services/http.service";
+import { MyConstants } from "../constants/my-constants";
 
 declare const M;
 @Component({
@@ -22,6 +24,12 @@ export class ProgramComponent implements OnInit {
   public newMaterial = "";
   public newMaterialActive = false;
   public newPersonActive = false;
+  public newAttachment = "";
+  public newLink = "";
+  public newAttachmentActive = false;
+  public newLinkActive = false;
+  public url = "api/upload";
+  public uploader: FileUploader;
 
   constructor(private httpService: HttpService) {}
 
@@ -29,6 +37,7 @@ export class ProgramComponent implements OnInit {
     this.programPoints = [];
     this.pointToEdit = new ProgramPoint();
     this.getProgramPoints();
+    this.initUploader();
   }
 
   public getProgramPoints(): any {
@@ -133,6 +142,27 @@ export class ProgramComponent implements OnInit {
     this.pointToEdit.people.push(this.newPerson);
   }
 
+  public saveAttachment() {
+    this.pointToEdit.attachments.push(this.newAttachment);
+  }
+
+  public saveLink() {
+    this.pointToEdit.links.push(this.newLink);
+  }
+
+  public removeLink(link: string) {
+    const index = this.pointToEdit.links.indexOf(link);
+    if (index !== -1) {
+      this.pointToEdit.links.splice(index, 1);
+    }
+  }
+  public removeAttachment(att: string) {
+    const index = this.pointToEdit.attachments.indexOf(att);
+    if (index !== -1) {
+      this.pointToEdit.attachments.splice(index, 1);
+    }
+  }
+
   public removeMaterial(mat: string) {
     const index = this.pointToEdit.material.indexOf(mat);
     if (index !== -1) {
@@ -145,5 +175,30 @@ export class ProgramComponent implements OnInit {
     if (index !== -1) {
       this.pointToEdit.people.splice(index, 1);
     }
+  }
+
+  public startUpload() {
+    if (
+      this.pointToEdit &&
+      this.pointToEdit._id &&
+      this.pointToEdit._id.length > 0
+    ) {
+      this.uploader.setOptions({
+        headers: [{ name: "programId", value: this.pointToEdit._id }]
+      });
+      this.uploader.uploadAll();
+    }
+  }
+
+  private initUploader() {
+    this.uploader = new FileUploader({
+      url: this.url,
+      authToken: sessionStorage.getItem(MyConstants.token)
+    });
+    this.uploader.onCompleteItem =
+      (item: FileItem, res: string, status: number, headers: any) => {
+        this.pointToEdit.attachments.push(item._file.name);
+      }
+    ;
   }
 }

@@ -54,6 +54,26 @@
                 </li>
             </ul>
         </div>
+        <div class="row">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>Anhänge</h5>
+                </li>
+                <li class="collection-item" *ngFor="let attachment of selectedPoint.attachments">
+                    <a href="attachments/{{selectedPoint._id}}/{{attachment}}" download>{{attachment | slice:0:30}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>Links</h5>
+                </li>
+                <li class="collection-item" *ngFor="let link of selectedPoint.links">
+                    <a href="{{link}}" target="_blank">{{link | slice:0:20}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="modal-footer">
         <a class="modal-action waves-effect waves-green btn-flat" (click)="closeModal()">OK</a>

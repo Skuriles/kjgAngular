@@ -3,5 +3,10 @@
         "target": "http://localhost:61001",
         "secure": false,
         "logLevel": "debug"
+    },
+    "/attachments/*": {
+        "target": "http://localhost:61001",
+        "secure": false,
+        "logLevel": "debug"
     }
 }
