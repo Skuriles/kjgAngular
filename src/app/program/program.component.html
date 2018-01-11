@@ -36,8 +36,12 @@
                     <li class="collection-header">
                         <h5>Anhänge</h5>
                     </li>
-                    <li class="collection-item" *ngFor="let attachment of point.attachments">
-                        <a href="attachments/{{point._id}}/{{attachment}}" download>{{link | slice:0:30}}</a>
+                    <li class="collection-item isLink" *ngFor="let attachment of point.attachments">
+                        <div (click)="getAttachment(point, attachment)">{{attachment | slice:0:30}}
+                            <a class="secondary-content">
+                                <i class="fa fa-download"></i>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -200,8 +204,7 @@
 
                         <h5>Datei auswählen</h5>
 
-                        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
-                            class="my-drop-zone">
+                        <div ng2FileDrop [uploader]="uploader" class="my-drop-zone">
                             Drop um hochzuladen
                         </div>
                         <input type="file" ng2FileSelect [uploader]="uploader" />
@@ -216,8 +219,6 @@
                             <thead>
                                 <tr>
                                     <th width="50%">Name</th>
-                                    <th>Size</th>
-                                    <th>Progress</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -225,13 +226,7 @@
                             <tbody>
                                 <tr *ngFor="let item of uploader.queue" class="white-text">
                                     <td>
-                                        <strong>{{ item?.file?.name }}</strong>
-                                    </td>
-                                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                                    <td *ngIf="uploader.isHTML5">
-                                        <div class="progress" style="margin-bottom: 0;">
-                                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                        </div>
+                                        <strong>{{ item?.file?.name | slice:0:15}}</strong>
                                     </td>
                                     <td class="text-center">
                                         <span *ngIf="item.isSuccess">
@@ -253,16 +248,27 @@
                         </table>
 
                         <div class="card-action">
-                            <div>
-                                Queue progress:
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                            <div [hidden]="!uploadActive">
+                                <div class="preloader-wrapper big active">
+                                    <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <a class="isLink" (click)="startUpload()">Upload</a>
-                            <a class="isLink" (click)="uploader.cancelAll(); newAttachmentActive = false">Abbrechen</a>
-                            <a class="isLink" (click)="uploader.clearQueue()">Löschen</a>
-                            <a class="isLink" (click)="newAttachmentActive = false">OK</a>
+                            <div [hidden]="uploadActive">
+                                <a class="isLink" (click)="startUpload()">Upload</a>
+                                <a class="isLink" (click)="uploader.cancelAll(); newAttachmentActive = false">Abbrechen</a>
+                                <a class="isLink" (click)="uploader.clearQueue()">Löschen</a>
+                                <a class="isLink" (click)="newAttachmentActive = false">OK</a>
+                            </div>
                         </div>
 
                     </div>

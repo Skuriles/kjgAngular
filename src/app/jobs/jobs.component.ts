@@ -85,7 +85,7 @@ export class JobsComponent implements OnInit {
     }
   }
 
-  public deleteJOb() {
+  public deleteJob() {
     if (
       this.jobToEdit &&
       this.jobToEdit._id &&

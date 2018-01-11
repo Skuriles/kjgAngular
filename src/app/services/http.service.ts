@@ -11,7 +11,7 @@ import { Job } from "../jobs/job";
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {}
-
+  
   public api = "api/";
   public pushApi = "push/";    
 
@@ -142,8 +142,35 @@ export class HttpService {
     const nodeUrl = this.api + "deleteJob";
     return this.postAuthRequest(nodeUrl, job);
   }
+
+  public getAttachment(path: string): any {
+    const nodeUrl = path;
+    return this.postDownloadAuthRequest(nodeUrl, null);
+  }
   
-  // serview worker
+  public downloadFile(data: Response, attachment: string) {    
+    const newblob = window.URL.createObjectURL(data);
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(data);
+      return;
+    } 
+   
+    // For other browsers: 
+    // Create a link pointing to the ObjectURL containing the blob.
+    
+    const link = document.createElement('a');
+    link.href = newblob;
+    link.download= attachment;
+    link.click();
+    setTimeout(() => {
+      // For Firefox it is necessary to delay revoking the ObjectURL
+      window.URL.revokeObjectURL(newblob);
+    }, 100);
+    // const blob = new Blob([data], { type: data.type });
+    // const url = window.URL.createObjectURL(data);
+    // window.open(url, "");
+  }
+  // service worker
   public addSubscriber(body): any {
     const nodeUrl = this.api + "webpush";
     return this.postAuthRequest(nodeUrl, body);
@@ -165,6 +192,16 @@ export class HttpService {
         "Authorization",
         sessionStorage.getItem(MyConstants.token)
       )
+    });
+  }
+
+  private postDownloadAuthRequest(nodeUrl: string, body: object) {
+    return this.http.post(nodeUrl, body, {
+      headers: new HttpHeaders().set(
+        "Authorization",
+        sessionStorage.getItem(MyConstants.token)
+      ),
+      responseType: "blob"
     });
   }
 }

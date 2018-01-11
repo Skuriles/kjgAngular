@@ -8,7 +8,7 @@
     <thead>
         <tr>
             <th>Zeit</th>
-            <th *ngFor="let day of daysEx">{{day.date | date:'dd.MM.yyyy' }} - {{day.name}}</th>
+            <th *ngFor="let day of daysEx">{{day.date | date:'dd.MM.yyyy' }} - <span class="hide-on-small-only">{{day.name}}</span><i class="hide-on-med-and-up fa fa-info-circle" (click)="showDayInfo(day)"></i> </th>
         </tr>
     </thead>
     <tbody>
@@ -59,8 +59,8 @@
                 <li class="collection-header">
                     <h5>Anhänge</h5>
                 </li>
-                <li class="collection-item" *ngFor="let attachment of selectedPoint.attachments">
-                    <a href="attachments/{{selectedPoint._id}}/{{attachment}}" download>{{attachment | slice:0:30}}</a>
+                <li class="collection-item isLink" *ngFor="let attachment of selectedPoint.attachments">
+                    <div (click)="getAttachment(attachment)">{{attachment | slice:0:30}}<a class="secondary-content"><i class="fa fa-download"></i></a></div>
                 </li>
             </ul>
         </div>
@@ -76,6 +76,19 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="modal-action waves-effect waves-green btn-flat" (click)="closeModal()">OK</a>
+        <a class="modal-action waves-effect waves-green" (click)="closeModal()">OK</a>
     </div>
 </div>
+
+<div id="modal2" class="modal" #dayInfoModal>
+        <div class="modal-content">           
+            <div class="row">
+                Datum: {{selectedDay.date | date:'dd.MM.yyyy' }}
+            </div>         
+            <div class="row">
+                   Motto: {{selectedDay.name}}
+                </div>
+        <div class="modal-footer">
+            <a class="modal-action waves-effect waves-green" (click)="closeInfoModal()">OK</a>
+        </div>
+    </div>

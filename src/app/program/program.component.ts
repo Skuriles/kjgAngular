@@ -30,14 +30,15 @@ export class ProgramComponent implements OnInit {
   public newLinkActive = false;
   public url = "api/upload";
   public uploader: FileUploader;
+  public uploadActive = false;
 
   constructor(private httpService: HttpService) {}
 
   ngOnInit() {
+    this.initUploader();
     this.programPoints = [];
     this.pointToEdit = new ProgramPoint();
     this.getProgramPoints();
-    this.initUploader();
   }
 
   public getProgramPoints(): any {
@@ -135,28 +136,39 @@ export class ProgramComponent implements OnInit {
   }
 
   public saveMaterial() {
+    if(this.saveOk){
+      return;
+    }
     this.pointToEdit.material.push(this.newMaterial);
   }
 
   public savePerson() {
+    if(this.saveOk){
+      return;
+    }
     this.pointToEdit.people.push(this.newPerson);
   }
 
-  public saveAttachment() {
-    this.pointToEdit.attachments.push(this.newAttachment);
-  }
-
   public saveLink() {
+    if(this.saveOk){
+      return;
+    }
     this.pointToEdit.links.push(this.newLink);
   }
 
   public removeLink(link: string) {
+    if(this.saveOk){
+      return;
+    }
     const index = this.pointToEdit.links.indexOf(link);
     if (index !== -1) {
       this.pointToEdit.links.splice(index, 1);
     }
   }
   public removeAttachment(att: string) {
+    if(this.saveOk){
+      return;
+    }
     const index = this.pointToEdit.attachments.indexOf(att);
     if (index !== -1) {
       this.pointToEdit.attachments.splice(index, 1);
@@ -164,6 +176,9 @@ export class ProgramComponent implements OnInit {
   }
 
   public removeMaterial(mat: string) {
+    if(this.saveOk){
+      return;
+    }
     const index = this.pointToEdit.material.indexOf(mat);
     if (index !== -1) {
       this.pointToEdit.material.splice(index, 1);
@@ -171,6 +186,9 @@ export class ProgramComponent implements OnInit {
   }
 
   public removePerson(person: string) {
+    if(this.saveOk){
+      return;
+    }
     const index = this.pointToEdit.people.indexOf(person);
     if (index !== -1) {
       this.pointToEdit.people.splice(index, 1);
@@ -187,6 +205,16 @@ export class ProgramComponent implements OnInit {
         headers: [{ name: "programId", value: this.pointToEdit._id }]
       });
       this.uploader.uploadAll();
+      this.uploadActive = true;
+    }
+  }
+
+  public getAttachment(point: ProgramPoint, attachment: string) {
+    if (point && point._id && point._id.length > 0) {
+      const path = "/api/attachments/" + point._id + "/" + attachment;
+      this.httpService.getAttachment(path).subscribe(data => {
+        this.httpService.downloadFile(data, attachment);
+      });
     }
   }
 
@@ -195,10 +223,14 @@ export class ProgramComponent implements OnInit {
       url: this.url,
       authToken: sessionStorage.getItem(MyConstants.token)
     });
-    this.uploader.onCompleteItem =
-      (item: FileItem, res: string, status: number, headers: any) => {
-        this.pointToEdit.attachments.push(item._file.name);
-      }
-    ;
+    this.uploader.onCompleteItem = (
+      item: FileItem,
+      res: string,
+      status: number,
+      headers: any
+    ) => {
+      this.uploadActive = false;
+      this.pointToEdit.attachments.push(item._file.name);
+    };
   }
 }
