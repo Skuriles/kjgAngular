@@ -13,6 +13,7 @@ import { DailyPlanComponent } from './daily-plan/daily-plan.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { DayComponent } from './day/day.component';
 import { ProgramComponent } from './program/program.component';
+import { RulesComponent } from './rules/rules.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,11 @@ const routes: Routes = [
   {
     path: "jobs",
     component: JobsComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "rules",
+    component: RulesComponent,
     canActivate: [AuthguardService]
   },
   {

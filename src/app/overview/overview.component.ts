@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../services/http.service';
-import { User } from '../users/userDto';
-import { Drink } from '../drinks/drink';
-import { DrinkService } from '../services/drink.service';
-import { UserDrinks, DrinkCounter } from '../drinks/user-drinks';
+import { Component, OnInit } from "@angular/core";
+import { HttpService } from "../services/http.service";
+import { User } from "../users/userDto";
+import { Drink } from "../drinks/drink";
+import { DrinkService } from "../services/drink.service";
+import { UserDrinks, DrinkCounter } from "../drinks/user-drinks";
+import { SwPush } from "@angular/service-worker";
+import { MyConstants } from "../constants/my-constants";
+
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html'
+  selector: "app-overview",
+  templateUrl: "./overview.component.html"
 })
 export class OverviewComponent implements OnInit {
   public drinks: Drink[];
@@ -16,7 +19,8 @@ export class OverviewComponent implements OnInit {
 
   constructor(
     private httpService: HttpService,
-    private drinkService: DrinkService
+    private drinkService: DrinkService,
+    private swPush: SwPush
   ) {}
 
   ngOnInit() {
@@ -98,5 +102,81 @@ export class OverviewComponent implements OnInit {
         this.userDrinks.push(newUserDrink);
       }
     }
+  }
+
+  public startPush() {
+    this.subscribeToPush();
+    this.pushListener();
+  }
+
+  public testPush() {
+    this.httpService.sendPush().subscribe(() => {
+      // TODO nothing;
+    });
+  }
+
+  private subscribeToPush() {
+    this.swPush
+      .requestSubscription({
+        serverPublicKey: MyConstants.publicSwKey
+      })
+      .then(pushSubscription => {
+        this.updateSubscription(pushSubscription);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  private updateSubscription(pushSubscription: PushSubscription) {
+    // Requesting messaging service to subscribe current client (browser)
+    const body = {
+      action: "subscribe",
+      subscription: pushSubscription
+    };
+    // Passing subscription object to our backend
+    this.httpService.addSubscriber(body).subscribe(
+      res => {
+        console.log("[App] Add subscriber request answer", res);
+      },
+      err => {
+        console.log("[App] Add subscriber request failed", err);
+      }
+    );
+  }
+
+  private pushListener() {
+    this.swPush.messages.subscribe((message: any) => {
+      console.log(JSON.stringify(message));
+    });
+  }
+
+  public unsubscribe() {
+    this.swPush
+      .requestSubscription({
+        serverPublicKey: MyConstants.publicSwKey
+      })
+      .then((pushSubscription: PushSubscription) => {
+        if (pushSubscription) {
+          const body = {
+            action: "unsubscribe",
+            subscription: pushSubscription
+          };
+          this.httpService.addSubscriber(body).subscribe(
+            res => {
+              console.log("[App] Unsubscribe request answer", res);
+              this.swPush.unsubscribe();
+            },
+            err => {
+              console.log("[App] Unsubscribe request failed", err);
+            }
+          );
+        } else {
+          return;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 }

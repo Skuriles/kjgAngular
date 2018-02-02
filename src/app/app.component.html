@@ -6,6 +6,7 @@
             <li [hidden]="!isAdmin"><a (click)="showSubMenu(1)"><i class="fa fa-user-circle"></i> <span class="hide-on-small-only">Admin</span></a></li>
             <li><a (click)="showSubMenu(2)"><i class="fa fa-beer"></i> <span class="hide-on-small-only">Getränke</span></a></li>
             <li><a (click)="showSubMenu(3)"><i class="fa fa-home"></i> <span class="hide-on-small-only">Lager</span></a></li>
+            <li><a (click)="showSubMenu(4)"><i class="fa fa-hand-point-up"></i> <span class="hide-on-small-only">Regeln</span></a></li>
             <li><a routerLink="/login" (click)="logout()"><i class="fa fa-sign-out"></i> <span class="hide-on-small-only">Logout</span></a></li>
         </ul>
     </div>
@@ -29,6 +30,11 @@
             <li class="tab"><a routerLink="/dailyPlan"><i class="fa fa-list-alt"></i> <span class="hide-on-small-only">Tagesplan</span></a></li>
             <li class="tab"><a routerLink="/newDay"><i class="fa fa-sun-o"></i> <span class="hide-on-small-only">Tag</span></a></li>
             <li class="tab"><a routerLink="/program"><i class="fa fa-tasks"></i> <span class="hide-on-small-only">Programm</span></a></li>
+        </ul>
+    </div>
+    <div class="nav-content" [hidden]="openTab !== 4">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a routerLink="/rules"><i class="fa fa-hand-point-up"></i> <span class="hide-on-small-only">Regeln</span></a></li>          
         </ul>
     </div>
 </nav>
