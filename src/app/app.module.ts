@@ -26,6 +26,7 @@ import { JobsComponent } from "./jobs/jobs.component";
 import { DayComponent } from "./day/day.component";
 import { ProgramComponent } from "./program/program.component";
 import { RulesComponent } from './rules/rules.component';
+import { TeamRulesComponent } from './team-rules/team-rules.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RulesComponent } from './rules/rules.component';
     JobsComponent,
     DayComponent,
     ProgramComponent,
-    RulesComponent
+    RulesComponent,
+    TeamRulesComponent
   ],
   imports: [
     BrowserModule,

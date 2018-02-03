@@ -14,6 +14,7 @@ import { JobsComponent } from './jobs/jobs.component';
 import { DayComponent } from './day/day.component';
 import { ProgramComponent } from './program/program.component';
 import { RulesComponent } from './rules/rules.component';
+import { TeamRulesComponent } from './team-rules/team-rules.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,11 @@ const routes: Routes = [
   {
     path: "rules",
     component: RulesComponent,
+    canActivate: [AuthguardService]
+  },
+  {
+    path: "teamrules",
+    component: TeamRulesComponent,
     canActivate: [AuthguardService]
   },
   {

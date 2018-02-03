@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { Rule } from "../rules/rule";
 import { HttpService } from "../services/http.service";
-import { Rule } from "./rule";
 
 @Component({
-  selector: "app-rules",
-  templateUrl: "./rules.component.html",
+  selector: "app-team-rules",
+  templateUrl: "./team-rules.component.html"
 })
-export class RulesComponent implements OnInit {
+export class TeamRulesComponent implements OnInit {
 
   public editActive = false;
   public ruleToEdit: Rule;
@@ -49,7 +49,7 @@ export class RulesComponent implements OnInit {
 
   public saveRule() {
     if (this.ruleToEdit && this.ruleToEdit.name) {
-      this.httpService.updateRule(this.ruleToEdit).subscribe(
+      this.httpService.updateTeamRule(this.ruleToEdit).subscribe(
         () => {
           this.showSuccess = true;
           this.successText = "Regel gespeichert";
@@ -72,7 +72,7 @@ export class RulesComponent implements OnInit {
       this.ruleToEdit._id &&
       this.ruleToEdit._id.length > 0
     ) {
-      this.httpService.deleteRule(this.ruleToEdit).subscribe(
+      this.httpService.deleteTeamRule(this.ruleToEdit).subscribe(
         () => {
           this.showSuccess = true;
           this.successText = "Tag gelöscht";
@@ -90,7 +90,7 @@ export class RulesComponent implements OnInit {
   }
 
   private getRules() {
-    this.httpService.getRules().subscribe(
+    this.httpService.getTeamRules().subscribe(
       (rules: Rule[]) => {
         this.rules = rules;
       },

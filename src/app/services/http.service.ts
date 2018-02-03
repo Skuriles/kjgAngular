@@ -7,18 +7,19 @@ import { UserDrinks, UpdateDrink } from "../drinks/user-drinks";
 import { Day } from "../day/day";
 import { ProgramPoint } from "../program/program";
 import { Job } from "../jobs/job";
+import { Rule } from "../rules/rule";
 
 @Injectable()
 export class HttpService {
   constructor(private http: HttpClient) {}
-  
+
   public api = "api/";
-  public pushApi = "push/";    
+  public pushApi = "push/";
 
   public register(user: User): any {
     const nodeUrl = this.api + "register";
     return this.postRequest(nodeUrl, user);
-  } 
+  }
 
   public login(user: User): any {
     const nodeUrl = this.api + "login";
@@ -124,7 +125,7 @@ export class HttpService {
   public getDailyPlanEles(): any {
     const nodeUrl = this.api + "getDailyPlanEles";
     return this.postAuthRequest(nodeUrl, null);
-  } 
+  }
 
   // job stuff
 
@@ -147,20 +148,20 @@ export class HttpService {
     const nodeUrl = path;
     return this.postDownloadAuthRequest(nodeUrl, null);
   }
-  
-  public downloadFile(data: Response, attachment: string) {    
+
+  public downloadFile(data: Response, attachment: string) {
     const newblob = window.URL.createObjectURL(data);
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
       window.navigator.msSaveOrOpenBlob(data);
       return;
-    } 
-   
-    // For other browsers: 
+    }
+
+    // For other browsers:
     // Create a link pointing to the ObjectURL containing the blob.
-    
-    const link = document.createElement('a');
+
+    const link = document.createElement("a");
     link.href = newblob;
-    link.download= attachment;
+    link.download = attachment;
     link.click();
     setTimeout(() => {
       // For Firefox it is necessary to delay revoking the ObjectURL
@@ -178,6 +179,32 @@ export class HttpService {
 
   public sendPush(): any {
     const nodeUrl = this.api + "send";
+    return this.postAuthRequest(nodeUrl, null);
+  }
+
+  // Rule Stuff
+  public updateRule(rule: Rule): any {
+    const nodeUrl = this.api + "updateRule";
+    return this.postAuthRequest(nodeUrl, rule);
+  }
+  public deleteRule(rule: Rule): any {
+    const nodeUrl = this.api + "deleteRule";
+    return this.postAuthRequest(nodeUrl, rule);
+  }
+  public getRules(): any {
+    const nodeUrl = this.api + "getRules";
+    return this.postAuthRequest(nodeUrl, null);
+  }
+  public updateTeamRule(rule: Rule): any {
+    const nodeUrl = this.api + "updateTeamRule";
+    return this.postAuthRequest(nodeUrl, rule);
+  }
+  public deleteTeamRule(rule: Rule): any {
+    const nodeUrl = this.api + "deleteTeamRule";
+    return this.postAuthRequest(nodeUrl, rule);
+  }
+  public getTeamRules(): any {
+    const nodeUrl = this.api + "getTeamRules";
     return this.postAuthRequest(nodeUrl, null);
   }
 
