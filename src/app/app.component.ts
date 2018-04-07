@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.loginChanged = this.loginService.loginChanged$.subscribe(() => {
       this.loggedin = this.loginService.isLoggedIn;
       this.isAdmin = this.loginService.isAdmin;
-      if(!this.loggedin){
+      if (!this.loggedin) {
         this.openTab = null;
       }
     });
@@ -48,5 +48,12 @@ export class AppComponent implements OnInit {
       return;
     }
     this.openTab = menu;
+  }
+
+  public isNotPlanRoute() {
+    if (this.router.url !== "/dailyPlan") {
+      return "container";
+    }
+    return "";
   }
 }

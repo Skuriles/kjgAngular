@@ -19,6 +19,7 @@ export class ProgramComponent implements OnInit {
   public successText: string;
   public saveOk = false;
   public deleteActive = false;
+  public delConfirmActive = false;
   public clicked = null;
   public newPerson = "";
   public newMaterial = "";
@@ -56,9 +57,11 @@ export class ProgramComponent implements OnInit {
   public editPoint(point: ProgramPoint) {
     if (point) {
       this.pointToEdit.copy(point);
+      this.deleteActive = true;
+    } else {
+      this.deleteActive = false;
     }
     this.editActive = true;
-    this.deleteActive = true;
     setTimeout(() => {
       M.updateTextFields();
     }, 1);
@@ -96,7 +99,7 @@ export class ProgramComponent implements OnInit {
     }
   }
 
-  public deletePoint() {
+  public deleteConfirmed() {
     if (
       this.pointToEdit &&
       this.pointToEdit._id &&
@@ -117,6 +120,20 @@ export class ProgramComponent implements OnInit {
       this.showError = true;
       this.errorText = "Fehler, bitte neu versuchen";
     }
+    this.delConfirmActive = false;
+  }
+  public deleteDenied() {
+    this.delConfirmActive = false;
+  }
+
+  public deletePoint() {
+    if (
+      this.pointToEdit &&
+      this.pointToEdit._id &&
+      this.pointToEdit._id.length > 0
+    ) {
+      this.delConfirmActive = true;
+    }
   }
 
   public isClicked(index: number) {
@@ -136,28 +153,28 @@ export class ProgramComponent implements OnInit {
   }
 
   public saveMaterial() {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     this.pointToEdit.material.push(this.newMaterial);
   }
 
   public savePerson() {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     this.pointToEdit.people.push(this.newPerson);
   }
 
   public saveLink() {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     this.pointToEdit.links.push(this.newLink);
   }
 
   public removeLink(link: string) {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     const index = this.pointToEdit.links.indexOf(link);
@@ -166,7 +183,7 @@ export class ProgramComponent implements OnInit {
     }
   }
   public removeAttachment(att: string) {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     const index = this.pointToEdit.attachments.indexOf(att);
@@ -176,7 +193,7 @@ export class ProgramComponent implements OnInit {
   }
 
   public removeMaterial(mat: string) {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     const index = this.pointToEdit.material.indexOf(mat);
@@ -186,7 +203,7 @@ export class ProgramComponent implements OnInit {
   }
 
   public removePerson(person: string) {
-    if(this.saveOk){
+    if (this.saveOk) {
       return;
     }
     const index = this.pointToEdit.people.indexOf(person);

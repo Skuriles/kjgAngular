@@ -7,7 +7,6 @@ import { HttpService } from "../services/http.service";
   templateUrl: "./team-rules.component.html"
 })
 export class TeamRulesComponent implements OnInit {
-
   public editActive = false;
   public ruleToEdit: Rule;
   public showSuccess = false;
@@ -16,6 +15,7 @@ export class TeamRulesComponent implements OnInit {
   public successText: string;
   public saveOk = false;
   public deleteActive = false;
+  public delConfirmActive = false;
   public rules: Rule[];
 
   constructor(private httpService: HttpService) {}
@@ -29,11 +29,12 @@ export class TeamRulesComponent implements OnInit {
   public editRule(rule: Rule) {
     if (rule) {
       this.ruleToEdit = rule;
+      this.deleteActive = true;
     } else {
       this.ruleToEdit = new Rule();
+      this.deleteActive = false;
     }
     this.editActive = true;
-    this.deleteActive = true;
   }
 
   public closeEdit(reload) {
@@ -66,7 +67,7 @@ export class TeamRulesComponent implements OnInit {
     }
   }
 
-  public deleteRule() {
+  public deleteConfirmed() {
     if (
       this.ruleToEdit &&
       this.ruleToEdit._id &&
@@ -75,7 +76,7 @@ export class TeamRulesComponent implements OnInit {
       this.httpService.deleteTeamRule(this.ruleToEdit).subscribe(
         () => {
           this.showSuccess = true;
-          this.successText = "Tag gelöscht";
+          this.successText = "Regel gelöscht";
           this.saveOk = true;
         },
         err => {
@@ -87,6 +88,14 @@ export class TeamRulesComponent implements OnInit {
       this.showError = true;
       this.errorText = "Fehler, bitte neu versuchen";
     }
+    this.delConfirmActive = false;
+  }
+  public deleteDenied() {
+    this.delConfirmActive = false;
+  }
+
+  public deleteRule() {
+    this.delConfirmActive = true;
   }
 
   private getRules() {
@@ -100,5 +109,4 @@ export class TeamRulesComponent implements OnInit {
       }
     );
   }
-
 }

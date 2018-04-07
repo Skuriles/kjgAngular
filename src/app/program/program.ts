@@ -29,5 +29,9 @@ export class ProgramPoint {
       const el = programPoint.people[i];
       this.people.push(el);
     }
+    for (let i = 0; i < programPoint.links.length; i++) {
+      const el = programPoint.links[i];
+      this.links.push(el);
+    }
   }
 }

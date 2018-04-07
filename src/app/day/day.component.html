@@ -31,13 +31,13 @@
                     </div>
                     <div class="card-content grey lighten-4">
                         <div [hidden]="showTab !== 1">
-                            <i class="fa fa-edit right isLink" (click)="editProgram(1)"></i> {{dayToEdit.morning.shortName}}
+                            <div (click)="editProgram(1)"><i class="fa fa-edit right isLink" ></i> {{dayToEdit.morning.shortName}}</div>
                         </div>
                         <div [hidden]="showTab !== 2">
-                            <i class="fa fa-edit right isLink" (click)="editProgram(2)"></i> {{dayToEdit.afternoon.shortName}}
+                            <div (click)="editProgram(2)"><i class="fa fa-edit right isLink"></i> {{dayToEdit.afternoon.shortName}}</div>
                         </div>
                         <div [hidden]="showTab !== 3">
-                            <i class="fa fa-edit right isLink" (click)="editProgram(3)"></i> {{dayToEdit.evening.shortName}}
+                            <div (click)="editProgram(3)"><i class="fa fa-edit right isLink" ></i> {{dayToEdit.evening.shortName}}</div>
                         </div>
                     </div>
                 </form>
@@ -48,12 +48,18 @@
                     <span class="white-text">{{successText}}</span>
                 </div>
             </div>
-            <div class="card-action">
+            <div class="card-action" [hidden]="delConfirmActive">
                 <a class="isLink" (click)="deleteDay()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
                 <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveDay()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
             </div>
+            <div class="card-action" [hidden]="!delConfirmActive">
+                    <a class="isLink" (click)="deleteConfirmed()">
+                       LÖSCHEN
+                    </a>
+                    <a class="isLink" (click)="deleteDenied()">ABBRECHEN</a>                  
+                </div>
         </div>
     </div>
 </div>

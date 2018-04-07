@@ -4,10 +4,9 @@ import { Rule } from "./rule";
 
 @Component({
   selector: "app-rules",
-  templateUrl: "./rules.component.html",
+  templateUrl: "./rules.component.html"
 })
 export class RulesComponent implements OnInit {
-
   public editActive = false;
   public ruleToEdit: Rule;
   public showSuccess = false;
@@ -16,6 +15,7 @@ export class RulesComponent implements OnInit {
   public successText: string;
   public saveOk = false;
   public deleteActive = false;
+  public delConfirmActive = false;
   public rules: Rule[];
 
   constructor(private httpService: HttpService) {}
@@ -29,11 +29,12 @@ export class RulesComponent implements OnInit {
   public editRule(rule: Rule) {
     if (rule) {
       this.ruleToEdit = rule;
+      this.deleteActive = true;
     } else {
       this.ruleToEdit = new Rule();
+      this.deleteActive = false;
     }
     this.editActive = true;
-    this.deleteActive = true;
   }
 
   public closeEdit(reload) {
@@ -65,8 +66,7 @@ export class RulesComponent implements OnInit {
       this.errorText = "Eingabe Felder dürfen nicht leer sein";
     }
   }
-
-  public deleteRule() {
+  public deleteConfirmed() {
     if (
       this.ruleToEdit &&
       this.ruleToEdit._id &&
@@ -75,7 +75,7 @@ export class RulesComponent implements OnInit {
       this.httpService.deleteRule(this.ruleToEdit).subscribe(
         () => {
           this.showSuccess = true;
-          this.successText = "Tag gelöscht";
+          this.successText = "Regel gelöscht";
           this.saveOk = true;
         },
         err => {
@@ -87,6 +87,14 @@ export class RulesComponent implements OnInit {
       this.showError = true;
       this.errorText = "Fehler, bitte neu versuchen";
     }
+    this.delConfirmActive = false;
+  }
+  public deleteDenied() {
+    this.delConfirmActive = false;
+  }
+
+  public deleteRule() {
+    this.delConfirmActive = true;
   }
 
   private getRules() {
@@ -100,5 +108,4 @@ export class RulesComponent implements OnInit {
       }
     );
   }
-
 }

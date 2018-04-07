@@ -26,12 +26,18 @@
                   <span class="white-text">{{successText}}</span>
               </div>
           </div>
-          <div class="card-action">
+          <div class="card-action" [hidden]="delConfirmActive">
               <a class="isLink" (click)="deleteRule()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
               <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
               <a class="isLink" (click)="saveRule()" [hidden]="saveOk">SPEICHERN</a>
               <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
           </div>
+          <div class="card-action" [hidden]="!delConfirmActive">
+                <a class="isLink" (click)="deleteConfirmed()">
+                   LÖSCHEN
+                </a>
+                <a class="isLink" (click)="deleteDenied()">ABBRECHEN</a>                  
+            </div>
       </div>
   </div>
 </div>

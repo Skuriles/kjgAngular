@@ -8,8 +8,11 @@
     </li>
     <li *ngFor="let point of programPoints; let i=index">
         <div class="collapsible-header" (click)="setClicked(i)">
-            <i class="fa fa-edit" (click)="editPoint(point)"></i>{{point.shortName}}</div>
+            <div><i class="fas fa-caret-down"></i>{{point.shortName}}</div>            
+        </div>
         <div class="collapsible-body" [ngStyle]="{'display': isClicked(i)}">
+            <div class="row isLink" (click)="editPoint(point)"><i class="fa fa-edit"></i> Programmpunkt bearbeiten</div>
+            <div class="row"><h5>Beschreibung</h5></div>
             <div class="row">{{point.description}}</div>
             <div class="row">
                 <ul class="collection with-header">
@@ -84,7 +87,7 @@
                     </div>
                     <div class="chip" *ngFor="let material of pointToEdit.material" (click)="removeMaterial(material)">
                         {{material}}
-                        <i class="fa fa-close"></i>
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
                 <div [hidden]="!newMaterialActive">
@@ -113,7 +116,7 @@
                     </div>
                     <div class="chip" *ngFor="let person of pointToEdit.people" (click)="removePerson(person)">
                         {{person}}
-                        <i class="fa fa-close"></i>
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
                 <div [hidden]="!newPersonActive">
@@ -142,7 +145,7 @@
                     </div>
                     <div class="chip" *ngFor="let attachment of pointToEdit.attachments" (click)="removeAttachment(attachment)">
                         {{attachment | slice:0:15}}
-                        <i class="fa fa-close"></i>
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
 
@@ -153,7 +156,7 @@
                     </div>
                     <div class="chip" *ngFor="let link of pointToEdit.links" (click)="removeLink(link)">
                         {{link | slice:0:15}}
-                        <i class="fa fa-close"></i>
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
                 <div [hidden]="!newLinkActive">
@@ -181,7 +184,7 @@
                     <span class="white-text">{{successText}}</span>
                 </div>
             </div>
-            <div class="card-action">
+            <div class="card-action" [hidden]="delConfirmActive">
                 <a class="isLink" (click)="deletePoint()" [hidden]="saveOk || !deleteActive">
                     <i class="fa fa-trash"></i>
                 </a>
@@ -189,6 +192,12 @@
                 <a class="isLink" (click)="savePoint()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
             </div>
+            <div class="card-action" [hidden]="!delConfirmActive">
+                    <a class="isLink" (click)="deleteConfirmed()">
+                       LÖSCHEN
+                    </a>
+                    <a class="isLink" (click)="deleteDenied()">ABBRECHEN</a>                  
+                </div>
         </div>
     </div>
 </div>
@@ -236,7 +245,7 @@
                                             <i class="fa fa-ban"></i>
                                         </span>
                                         <span *ngIf="item.isError">
-                                            <i class="fa fa-close"></i>
+                                            <i class="fas fa-times"></i>
                                         </span>
                                     </td>
                                     <td nowrap>

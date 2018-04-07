@@ -11,7 +11,6 @@ declare const M;
   templateUrl: "./daily-plan.component.html"
 })
 export class DailyPlanComponent implements OnInit {
-
   @ViewChild("dayModal") dayModal: ElementRef;
   @ViewChild("dayInfoModal") dayInfoModal: ElementRef;
   public programPoints: ProgramPoint[];
@@ -26,14 +25,13 @@ export class DailyPlanComponent implements OnInit {
   public selectedPoint: ProgramPoint;
   public selectedDay: DayEx;
 
-  constructor(
-    private httpService: HttpService
-    ) {}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit() {
     this.days = [];
     this.programPoints = [];
     this.daysEx = [];
+    this.selectedDay = new DayEx();
     this.selectedPoint = new ProgramPoint();
     this.getDays();
   }
@@ -52,16 +50,21 @@ export class DailyPlanComponent implements OnInit {
     this.modalInstance.destroy();
   }
 
-  public getAttachment(attachment: string){
-    if ( this.selectedPoint && this.selectedPoint._id && this.selectedPoint._id.length > 0){
-    const filePath = "/api/attachments/" + this.selectedPoint._id + "/" + attachment;
-    this.httpService.getAttachment(filePath).subscribe(data => {
-      this.httpService.downloadFile(data, attachment);
-    });
+  public getAttachment(attachment: string) {
+    if (
+      this.selectedPoint &&
+      this.selectedPoint._id &&
+      this.selectedPoint._id.length > 0
+    ) {
+      const filePath =
+        "/api/attachments/" + this.selectedPoint._id + "/" + attachment;
+      this.httpService.getAttachment(filePath).subscribe(data => {
+        this.httpService.downloadFile(data, attachment);
+      });
     }
   }
 
-  public showDayInfo(day: DayEx){
+  public showDayInfo(day: DayEx) {
     if (day) {
       this.selectedDay = day;
       const elem = this.dayInfoModal.nativeElement;

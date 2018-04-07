@@ -1,11 +1,13 @@
 <ul class="collapsible" data-collapsible="accordion" [hidden]="editActive">
     <li (click)="editJob(null)">
-        <div class="collapsible-header"><i class="fa fa-plus"></i>Neuer Job</div>
+        <div class="collapsible-header"><i class="fa fa-plus"></i> Neuer Job</div>
         <div class="collapsible-body"><span>Klicke auf das "+" um einen neuen Job anzulegen</span></div>
     </li>
     <li *ngFor="let job of jobs; let i=index">
-        <div class="collapsible-header" (click)="setClicked(i)"><i class="fa fa-edit" (click)="editJob(job)"></i>{{job.name}}</div>
+        <div class="collapsible-header" (click)="setClicked(i)"><i class="fas fa-caret-down"></i> {{job.name}}</div>
         <div class="collapsible-body" [ngStyle]="{'display': isClicked(i)}">
+                <div class="row isLink" (click)="editJob(job)"><i class="fa fa-edit"></i> Programmpunkt bearbeiten</div>
+                <div class="row"><h5>Beschreibung</h5></div>
             <div class="row">{{job.description}}</div>            
             <div class="row">
                 <ul class="collection with-header">
@@ -46,7 +48,7 @@
                     </div>
                     <div class="chip" *ngFor="let person of jobToEdit.persons" (click)="removePerson(person)">
                         {{person}}
-                        <i class="fa fa-close"></i>
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
                 <div [hidden]="!newPersonActive">
@@ -72,12 +74,18 @@
                     <span class="white-text">{{successText}}</span>
                 </div>
             </div>
-            <div class="card-action">
+            <div class="card-action" [hidden]="delConfirmActive">
                 <a class="isLink" (click)="deleteJob()" [hidden]="saveOk || !deleteActive"><i class="fa fa-trash"></i></a>
                 <a class="isLink" (click)="closeEdit(false)" [hidden]="saveOk">ABBRECHEN</a>
                 <a class="isLink" (click)="saveJob()" [hidden]="saveOk">SPEICHERN</a>
                 <a class="isLink" (click)="closeEdit(true)" [hidden]="!saveOk">OK</a>
             </div>
+            <div class="card-action" [hidden]="!delConfirmActive">
+                    <a class="isLink" (click)="deleteConfirmed()">
+                       LÖSCHEN
+                    </a>
+                    <a class="isLink" (click)="deleteDenied()">ABBRECHEN</a>                  
+                </div>
         </div>
     </div>
 </div>

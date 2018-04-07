@@ -1,9 +1,9 @@
 <ul class="collection left-align" [hidden]="editActive">
     <li class="collection-item">
-        <div>Neuer Drink<a (click)="newDrink()" class="secondary-content isLink"><i class="fa fa-plus"></i></a></div>
+        <div (click)="newDrink()">Neuer Drink<a  class="secondary-content isLink"><i class="fa fa-plus"></i></a></div>
     </li>
     <li *ngFor="let drink of drinks" class="collection-item">
-        <div>{{drink.name}}<a (click)="editCurrentDrink(drink)" class="secondary-content isLink"><i class="fa fa-edit"></i></a></div>
+        <div (click)="editCurrentDrink(drink)">{{drink.name}}<a class="secondary-content isLink"><i class="fa fa-edit"></i></a></div>
     </li>
 </ul>
 

@@ -18,6 +18,7 @@ export class JobsComponent implements OnInit {
   public successText: string;
   public saveOk = false;
   public deleteActive = false;
+  public delConfirmActive = false;
   public clicked = null;
   public newPerson = "";
   public newMaterial = "";
@@ -44,11 +45,12 @@ export class JobsComponent implements OnInit {
   public editJob(job: Job) {
     if (job) {
       this.jobToEdit = job;
+      this.deleteActive = true;
     } else {
       this.jobToEdit = new Job();
+      this.deleteActive = false;
     }
     this.editActive = true;
-    this.deleteActive = true;
     setTimeout(() => {
       M.updateTextFields();
     }, 1);
@@ -84,13 +86,8 @@ export class JobsComponent implements OnInit {
       this.errorText = "Eingabe Felder dürfen nicht leer sein";
     }
   }
-
-  public deleteJob() {
-    if (
-      this.jobToEdit &&
-      this.jobToEdit._id &&
-      this.jobToEdit._id.length > 0
-    ) {
+  public deleteConfirmed() {
+    if (this.jobToEdit && this.jobToEdit._id && this.jobToEdit._id.length > 0) {
       this.httpService.deleteJob(this.jobToEdit).subscribe(
         () => {
           this.showSuccess = true;
@@ -106,6 +103,14 @@ export class JobsComponent implements OnInit {
       this.showError = true;
       this.errorText = "Fehler, bitte neu versuchen";
     }
+    this.delConfirmActive = false;
+  }
+  public deleteDenied() {
+    this.delConfirmActive = false;
+  }
+
+  public deleteJob() {
+    this.delConfirmActive = true;
   }
 
   public isClicked(index: number) {
@@ -122,7 +127,7 @@ export class JobsComponent implements OnInit {
     } else {
       this.clicked = index;
     }
-  } 
+  }
 
   public savePerson() {
     this.jobToEdit.persons.push(this.newPerson);
